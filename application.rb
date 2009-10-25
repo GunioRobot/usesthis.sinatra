@@ -31,7 +31,7 @@ helpers do
         unless admin && admin[:name] == options.admin[:name] && admin[:password] == options.admin[:password]
             raise not_found
         end
-    end
+    end    
 end
 
 get '/' do
@@ -69,13 +69,14 @@ get '/logout/?' do
     redirect '/'
 end
 
-get '/new/?' do
+get '/interviews/new/?' do
     needs_auth
     
-    haml :new
+    @interview = Interview.new(:slug => params[:slug])
+    haml :'interview.new', :layout => !request.xhr?
 end
 
-post '/new/?' do
+post '/interviews/new/?' do
     needs_auth
     
     @interview = Interview.new
@@ -93,12 +94,43 @@ post '/new/?' do
 
 ### What would be your dream setup?
 END
-    
+
     if @interview.save
-        redirect "/#{@interview.slug}/"
+        request.xhr? ? throw(:halt, 201) : redirect("/#{@interview.slug}/")
     else
-        haml :new
+        haml:'interview.new', :layout => !request.xhr?
     end
+end
+
+get '/wares/new/?' do
+    needs_auth
+    
+    @ware = Ware.new(:slug => params[:slug])
+    haml :'ware.new', :layout => !request.xhr?
+end
+
+post '/wares/new/?' do
+    needs_auth
+
+    @ware = Ware.new(params)
+    
+    if @ware.save
+        request.xhr? ? throw(:halt, 201) : redirect('/')
+    else
+        haml :'ware.new', :layout => !request.xhr?
+    end
+end
+
+get '/:slug/relink?' do |slug|
+    needs_auth
+    
+    @interview = Interview.first(:slug => slug)
+    raise not_found unless @interview
+    
+    @interview.link_to_wares
+    @interview.save!
+    
+    RDiscount.new(@interview.contents_with_wares).to_html
 end
 
 get '/:slug/:key/?' do |slug, key|
@@ -107,7 +139,13 @@ get '/:slug/:key/?' do |slug, key|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    eval("@interview.#{key}")
+    result = begin
+        eval("@interview.#{key}")
+    rescue
+        nil
+    end
+    
+    result
 end
 
 post '/:slug/edit/:key/?' do |slug, key|
@@ -131,7 +169,11 @@ post '/:slug/edit/:key/?' do |slug, key|
         when 'published_at'
             result = @interview.published_at.strftime("%b %d, %Y")
         else
-            result = eval("@interview.#{key}")
+            result = begin
+                eval("@interview.#{key}")
+            rescue
+                nil
+            end
         end
 
     result
@@ -145,9 +187,9 @@ get '/:slug/?' do
 end
 
 not_found do
-    haml :error, :locals => { :message => "Man, I suck. I can't find what you're looking for." }
+    haml :error, :locals => { :message => "Man, I suck. I can't find what you're looking for." }, :layout => !request.xhr?
 end
 
 error do
-    haml :error, :locals => { :message => "Something bad happened. It's not you, it's me. Probably." }
+    haml :error, :locals => { :message => "Something bad happened. It's not you, it's me. Probably." }, :layout => !request.xhr?
 end
