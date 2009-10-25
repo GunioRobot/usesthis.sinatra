@@ -2,21 +2,8 @@ $(document).ready(function(){
 	if (typeof(interview_slug) != 'undefined'){
 		var edit_url = '/' + interview_slug + '/edit/';
 
-		var errors_from_response = function(response){
-			var result = $('errors', response).children();
-			
-			if (result.length < 1){
-				return false;
-			}
-			
-			var list = $("<ul class='errors'>");
-			
-			$(result).each(function(i){
-				$(list).append("<li>" + $(result[i]).text() + "</li>")
-			});
-			
-			return list;
-		}
+		var wares_editor = function(){
+		}		
 		
 		var check_wares = function(value){
 			var matches = null;
@@ -35,38 +22,43 @@ $(document).ready(function(){
 					$('article.overview').append("<p class='ware' id='" + ware_slug + "'>" + matches[1] + "</p>");
 				}
 			}
+		};		
+		
+		check_wares($('article.contents').text());
+		
+		$('p.ware').live('click', function(){
+			var ware = $(this);
+			var id = $(ware).attr('id');
+
+			if ($("p#" + id + " form").length < 1){
+				$.get('/wares/new', {slug: $(ware).attr('id')}, function(data){
+					ware.replaceWith(data);
+				});
+			}
+		});
+		
+		$('form.editor.ware').live('submit', function(event){
+			var form = $(this);
+			event.preventDefault();
 			
-			$('p.ware').click(function(){
-				var ware = $(this);
-				var id = $(ware).attr('id');
-				
-				if ($("p#" + id + " form").length < 1){
-					$.get('/wares/new', {slug: $(ware).attr('id')}, function(data){
-						ware.replaceWith(data);
-						
-						$('form.editor.ware').submit(function(event){
-							var form = $(this);
-							event.preventDefault();
-							
-							$.post('/wares/new', $(this).serialize(), function(data){
-								if ($('rsp', data).attr('ok') == 1){
-									$(form).remove();
-									
-									$.post('/' + interview_slug + '/relink', function(data){
-										$('article.contents').html(data);
-									});
-								} else {
-									$('ul.errors', form).remove();
-									$(form).prepend(errors_from_response(data));
-								}
-							});
+			$.ajax({
+				type: 'POST',
+				url: '/wares/new',
+				data: $(this).serialize(),
+				complete: function(request, status){
+					if (request.status == 201){
+						$(form).remove();
+						$.get('/' + interview_slug + '/relink', function(data){
+							$('article.contents').html(data);
 						});
-					});
+						
+					} else {
+						$(form).replaceWith($(request.responseText));
+					}
 				}
 			});
-		};
-	
-		check_wares($('article.contents').text());
+			
+		});
 		
 		$('a#publish').click(function(){
 			if(!window.confirm('Publish this interview?')) {
