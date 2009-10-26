@@ -2,9 +2,6 @@ $(document).ready(function(){
 	if (typeof(interview_slug) != 'undefined'){
 		var edit_url = '/' + interview_slug + '/edit/';
 
-		var wares_editor = function(){
-		}		
-		
 		var check_wares = function(value){
 			var matches = null;
 			
@@ -45,15 +42,16 @@ $(document).ready(function(){
 				type: 'POST',
 				url: '/wares/new',
 				data: $(this).serialize(),
+				dataType: 'json',
 				complete: function(request, status){
-					if (request.status == 201){
+					if (request.status == 200){
 						$(form).remove();
 						$.get('/' + interview_slug + '/relink', function(data){
 							$('article.contents').html(data);
 						});
-						
 					} else {
-						$(form).replaceWith($(request.responseText));
+						$('ul.errors', form).remove();
+						$(form).prepend(request.responseText);
 					}
 				}
 			});
