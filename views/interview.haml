@@ -1,6 +1,6 @@
 - if session[:admin]
   %script{:type => 'text/javascript'}
-    var slug = "#{@interview.slug}";
+    var interview_slug = "#{@interview.slug}";
 %section{:id => @interview.slug}
   %article.overview
     %img{:src => "/images/portraits/#{@interview.slug}.jpg", :width => 500, :height => 335, :alt => @interview.person, :class => 'portrait'}
