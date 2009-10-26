@@ -31,7 +31,19 @@ helpers do
         unless admin && admin[:name] == options.admin[:name] && admin[:password] == options.admin[:password]
             raise not_found
         end
-    end    
+    end
+    
+    def errors_for(object)
+        result = "<ul class='errors'>\n"
+
+        object.errors.each do |error|
+            result += "<li>#{error}</li>\n";
+        end
+        
+        result += "</ul>\n";
+        
+        result
+    end
 end
 
 get '/' do
@@ -95,10 +107,15 @@ post '/interviews/new/?' do
 ### What would be your dream setup?
 END
 
-    if @interview.save
-        request.xhr? ? throw(:halt, 201) : redirect("/#{@interview.slug}/")
+    saved = @interview.save
+    
+    if request.xhr?
+        unless saved
+            status 400
+            errors_for(@interview)
+        end
     else
-        haml:'interview.new', :layout => !request.xhr?
+        saved ? redirect("/#{@interview.slug}/") : haml(:'interview.new')
     end
 end
 
@@ -113,11 +130,15 @@ post '/wares/new/?' do
     needs_auth
 
     @ware = Ware.new(params)
+    saved = @ware.save
     
-    if @ware.save
-        request.xhr? ? throw(:halt, 201) : redirect('/')
+    if request.xhr?
+        unless saved
+            status 400
+            errors_for(@ware)
+        end
     else
-        haml :'ware.new', :layout => !request.xhr?
+        saved ? redirect('/') : haml(:'ware.new')
     end
 end
 
