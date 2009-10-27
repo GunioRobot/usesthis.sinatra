@@ -121,9 +121,23 @@ margin: 0;
 font-size: 80%;
 }
 
-form.editor input {
+form.editor.interview input {
 font-size: 95%;
 color: inherit;
+}
+
+form.editor.ware {
+padding: 20px 15px 0 15px;
+}
+
+form.editor.ware p {
+padding: 0;
+margin: 2px 0;
+}
+
+label {
+float: left;
+width: 100px;
 }
 
 p#admin {
@@ -146,6 +160,12 @@ p.pagination {
 text-align: center;
 }
 
+p.unpublished {
+padding: 5px 10px;
+background-color: #eee;
+font-size: 80%;
+}
+
 time {
 font-size: 85%;
 color: #aaa;
@@ -153,4 +173,21 @@ color: #aaa;
 
 time:before {
 content: "Published ";
+}
+
+ul#wares {
+list-style: none outside;
+padding: 0;
+margin: 15px 0;
+font-size: 90%;
+}
+
+ul#wares > li {
+padding: 10px 0;
+border-bottom: solid 1px #eee;
+}
+
+ul#wares > li:before {
+content: "Missing: ";
+font-weight: bold;
 }
