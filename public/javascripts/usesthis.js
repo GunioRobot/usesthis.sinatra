@@ -82,32 +82,37 @@ $(document).ready(function(){
 		$('h2.person').editable(edit_url + 'person', {
 			cssclass: 'editor interview',
 			name: 'person',
-			id: ''
+			id: '',
+			onblur: 'ignore'
 		});
 	
 		$('img.portrait + p').editable(edit_url + 'credits', {
 			cssclass: 'editor interview',
 			name: 'credits',
 			id: '',
+			onblur: 'ignore',
 			loadurl: '/' + interview_slug + '/credits'
 		});
 	
 		$('p.summary').editable(edit_url + 'summary', {
 			cssclass: 'editor interview',
 			name: 'summary',
-			id: ''
+			id: '',
+			onblur: 'ignore'
 		});
 	
 		$('article.contents').editable(edit_url + 'contents', {
 			cssclass: 'editor interview',
 			name: 'contents',
 			id: '',
+			onblur: 'ignore',
 			loadurl: '/' + interview_slug + '/contents',
 			type: 'textarea',
 			submit: 'OK',
+			rows: '20',
 			callback: function(value, settings) {
 				check_wares(value);
 			}
-		});		
+		});
 	}
 });
