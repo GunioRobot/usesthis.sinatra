@@ -16,7 +16,7 @@
       %p.unpublished
         Not published.
         - if session[:admin]
-          %a{:href => '#', :id => 'publish'} Publish now
+          %a{:href => '#', :id => 'publish', :title => 'Publish this interview.'} Publish now
   %article.contents
     :markdown
       #{@interview.contents_with_wares}
