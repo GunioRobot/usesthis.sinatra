@@ -5,8 +5,11 @@ $(document).ready(function(){
 		var check_wares = function(value){
 			var matches = null;
 			
-			$("p.ware").remove();
-			$("form.editor.ware").remove();
+			if ($('ul#wares').length < 1){
+				$('article.overview').append('<ul id="wares"></ul>');
+			} else {
+				$('ul#wares').empty();
+			}
 			
 			while(matches = /\[([^\[\(\)]+)\]\[([a-z0-9\.\-]+)?\]/g.exec(value)){
 				if (matches && matches.length > 0){
@@ -16,21 +19,28 @@ $(document).ready(function(){
 						ware_slug = matches[1].toLowerCase();
 					}
 					
-					$('article.overview').append("<p class='ware' id='" + ware_slug + "'>" + matches[1] + "</p>");
+					$('ul#wares').append('<li id="' + ware_slug + '"><a href="#">' + matches[1] + '</a></li>');
 				}
 			}
-		};		
+		};
 		
 		check_wares($('article.contents').text());
 		
-		$('p.ware').live('click', function(){
-			var ware = $(this);
-			var id = $(ware).attr('id');
-
-			if ($("p#" + id + " form").length < 1){
+		$('ul#wares li a').live('click', function(event){
+			var ware = $(this).parent();
+			event.preventDefault();
+			
+			if ($(ware).children('form.editor.ware').length < 1){
 				$.get('/wares/new', {slug: $(ware).attr('id')}, function(data){
-					ware.replaceWith(data);
+					ware.append(data);
 				});
+			} else {
+				
+				if($('form.editor.ware', ware).is(':hidden')){
+					$('form.editor.ware', ware).show();
+				} else {
+					$('form.editor.ware', ware).hide();
+				}
 			}
 		});
 		
@@ -48,6 +58,7 @@ $(document).ready(function(){
 						$(form).remove();
 						$.get('/' + interview_slug + '/relink', function(data){
 							$('article.contents').html(data);
+							check_wares(data);
 						});
 					} else {
 						$('ul.errors', form).remove();
@@ -64,31 +75,31 @@ $(document).ready(function(){
 			}
 		
 			$.post(edit_url + 'published_at', { published_at: Date() }, function(result){
-				$('p.unpublished').replaceWith("<time>" + result + "</time>");
+				$('p.unpublished').replaceWith('<time>' + result + '</time>');
 			});
 		});
 		
 		$('h2.person').editable(edit_url + 'person', {
-			cssclass: 'editor',
+			cssclass: 'editor interview',
 			name: 'person',
 			id: ''
 		});
 	
 		$('img.portrait + p').editable(edit_url + 'credits', {
-			cssclass: 'editor',
+			cssclass: 'editor interview',
 			name: 'credits',
 			id: '',
 			loadurl: '/' + interview_slug + '/credits'
 		});
 	
 		$('p.summary').editable(edit_url + 'summary', {
-			cssclass: 'editor',
+			cssclass: 'editor interview',
 			name: 'summary',
 			id: ''
 		});
 	
 		$('article.contents').editable(edit_url + 'contents', {
-			cssclass: 'editor',
+			cssclass: 'editor interview',
 			name: 'contents',
 			id: '',
 			loadurl: '/' + interview_slug + '/contents',
