@@ -3,17 +3,24 @@
 #    it is copyright (c) 2009 daniel bogan (d @ waferbaby, then a dot and a 'com')
 #
 
-%w[rubygems sinatra datamapper haml rdiscount lib/interview lib/ware].each do |lib|
+require 'rubygems'
+require 'sinatra'
+require 'datamapper'
+require 'haml'
+require 'rdiscount'
+
+Dir.glob('lib/*.rb') do |lib|
     require lib
 end
-
-set :haml, {:format => :html5}
 
 configure do
     @config = YAML.load_file('usesthis.yml')
     DataMapper.setup(:default, @config[:database])
     
-    set :admin, @config[:admin]
+    set :admin_username, @config[:admin][:name]
+    set :admin_password, @config[:admin][:password]
+    set :haml, {:format => :html5}
+
     enable :sessions
 end
 
@@ -27,10 +34,11 @@ helpers do
     end
     
     def needs_auth
-        admin = request.env['rack.session'][:admin]
-        unless admin && admin[:name] == options.admin[:name] && admin[:password] == options.admin[:password]
-            raise not_found
-        end
+        raise not_found unless has_auth?
+    end
+    
+    def has_auth?
+        session[:authorised] == true
     end
     
     def errors_for(object)
@@ -64,20 +72,18 @@ end
 
 get '/login/?' do
     @auth ||= Rack::Auth::Basic::Request.new(request.env)
-    unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials[0] == options.admin[:name] && OpenSSL::Digest::SHA1.new(@auth.credentials[1]).hexdigest == options.admin[:password]
+    unless @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials[0] == options.admin_username && OpenSSL::Digest::SHA1.new(@auth.credentials[1]).hexdigest == options.admin_password
         response['WWW-Authenticate'] = %(Basic realm="The Setup")
         throw :halt, [401, "Don't think I don't love you."]
         return
     end
     
-    session[:admin] = options.admin
-    
+    session[:authorised] = true
     redirect '/'
 end
 
 get '/logout/?' do
-    session[:admin] = nil
-
+    session[:authorised] = false
     redirect '/'
 end
 
@@ -208,9 +214,9 @@ get '/:slug/?' do
 end
 
 not_found do
-    haml :error, :locals => { :message => "Man, I suck. I can't find what you're looking for." }, :layout => !request.xhr?
+    haml :not_found, :layout => !request.xhr?
 end
 
 error do
-    haml :error, :locals => { :message => "Something bad happened. It's not you, it's me. Probably." }, :layout => !request.xhr?
+    haml :error, :layout => !request.xhr?
 end
