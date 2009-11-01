@@ -1,4 +1,4 @@
-- if session[:admin]
+- if has_auth?
   %script{:type => 'text/javascript'}
     var interview_slug = "#{@interview.slug}";
 %section{:id => @interview.slug}
@@ -15,7 +15,7 @@
     - else
       %p.unpublished
         Not published.
-        - if session[:admin]
+        - if has_auth?
           %a{:href => '#', :id => 'publish', :title => 'Publish this interview.'} Publish now
   %article.contents
     :markdown
