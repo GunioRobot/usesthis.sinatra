@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	if (typeof(interview_slug) != 'undefined'){
-		var edit_url = '/' + interview_slug + '/edit/';
+		var edit_url = '/' + interview_slug + '/';
 
 		var check_wares = function(value){
 			var matches = null;
