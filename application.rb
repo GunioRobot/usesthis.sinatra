@@ -175,7 +175,7 @@ get '/:slug/:key/?' do |slug, key|
     result
 end
 
-post '/:slug/edit/:key/?' do |slug, key|
+post '/:slug/:key/?' do |slug, key|
     needs_auth
     
     @interview = Interview.first(:slug => slug)
