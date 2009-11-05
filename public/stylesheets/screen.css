@@ -1,3 +1,10 @@
+/* A font by Jos Buivenga (exljbris) -> http://www.exljbris.nl */
+
+@font-face {
+font-family: "museo sans 500";
+src: url("/fonts/museo_sans_500.otf");
+}
+
 a {
 color: #666;
 text-decoration: none;
@@ -60,7 +67,7 @@ background-color: #fff;
 color: #000;
 margin: auto;
 text-align: left;
-font-family: helvetica, serif;
+font-family: "museo sans 500", helvetica, serif;
 }
 
 footer {
@@ -72,7 +79,7 @@ h1 {
 padding: 0;
 margin: 0;
 color: #000;
-font-size: 175%;
+font-size: 170%;
 font-weight: normal;
 }
 
