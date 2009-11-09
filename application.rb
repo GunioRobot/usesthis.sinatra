@@ -33,24 +33,38 @@ helpers do
         ENV['RACK_ENV'] == 'production' ? "http://#{interview.slug}.usesthis.com/" : "/#{interview.slug}/"
     end
     
+    def interview_contents(interview)
+        result = <<END
+### Who are you and what do you do?
+#{interview.overview}
+
+### What hardware do you use?
+#{interview.hardware}
+
+### And what software?
+#{interview.software}
+
+### What would be your dream setup?
+#{interview.dream_setup}
+END
+        
+        if interview.wares.length > 0
+            result += "\r\n\r\n"
+        
+            interview.wares.each do |ware|
+                result += "[#{ware.slug}]: #{ware.url} \"#{ware.description}\"\n"
+            end
+        end
+
+        result
+    end
+    
     def needs_auth
         raise not_found unless has_auth?
     end
     
     def has_auth?
         session[:authorised] == true
-    end
-    
-    def errors_for(object)
-        result = "<ul class='errors'>\n"
-
-        object.errors.each do |error|
-            result += "<li>#{error}</li>\n";
-        end
-        
-        result += "</ul>\n";
-        
-        result
     end
 end
 
@@ -90,38 +104,18 @@ end
 get '/interviews/new/?' do
     needs_auth
     
-    @interview = Interview.new(:slug => params[:slug])
-    haml :'interview.new', :layout => !request.xhr?
+    @interview = Interview.new
+    haml :'interviews/new'
 end
 
 post '/interviews/new/?' do
     needs_auth
     
-    @interview = Interview.new
-    
-    @interview.slug = params[:slug]
-    @interview.person = params[:slug]
-    @interview.summary = "(Summary)"
-    @interview.credits = "(Credits)"
-    @interview.contents = <<END
-### Who are you and what do you do?
-
-### What hardware do you use?
-
-### And what software?
-
-### What would be your dream setup?
-END
-
-    saved = @interview.save
-    
-    if request.xhr?
-        unless saved
-            status 400
-            errors_for(@interview)
-        end
+    @interview = Interview.new(params)
+    if @interview.save
+        redirect "/#{@interview.slug}/"
     else
-        saved ? redirect("/#{@interview.slug}/") : haml(:'interview.new')
+        haml :'interviews/new'
     end
 end
 
@@ -129,94 +123,61 @@ get '/wares/new/?' do
     needs_auth
     
     @ware = Ware.new(:slug => params[:slug])
-    haml :'ware.new', :layout => !request.xhr?
+    haml :'wares/new'
 end
 
 post '/wares/new/?' do
     needs_auth
 
     @ware = Ware.new(params)
-    saved = @ware.save
-    
-    if request.xhr?
-        unless saved
-            status 400
-            errors_for(@ware)
-        end
+    if @ware.save
+        redirect '/'
     else
-        saved ? redirect('/') : haml(:'ware.new')
+        haml :'wares/new'
     end
 end
 
-get '/:slug/relink?' do |slug|
+get '/:slug/edit/?' do |slug|
     needs_auth
     
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
-    
-    @interview.link_to_wares
-    @interview.save!
-    
-    RDiscount.new(@interview.contents_with_wares).to_html
+
+    haml :'interviews/edit'
 end
 
-get '/:slug/:key/?' do |slug, key|
+post '/:slug/edit/?' do |slug|
     needs_auth
     
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    result = begin
-        eval("@interview.#{key}")
-    rescue
-        nil
+    if @interview.update(params)
+        redirect "/#{@interview.slug}/"
+    else
+        haml :'interviews/edit'
     end
-    
-    result
 end
 
-post '/:slug/:key/?' do |slug, key|
-    needs_auth
-    
+get '/:slug.markdown' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    @interview.update!(key => params[key]) unless params[key] == 'contents'
-    
-    case key
-        when 'contents'
-            @interview.contents = params[key]
-
-            @interview.link_to_wares
-            @interview.save!
-            
-            result = RDiscount.new(@interview.contents_with_wares).to_html
-        when 'credits'
-            result = RDiscount.new(@interview.credits).to_html
-        when 'published_at'
-            result = @interview.published_at.strftime("%b %d, %Y")
-        else
-            result = begin
-                eval("@interview.#{key}")
-            rescue
-                nil
-            end
-        end
-
-    result
+    content_type 'text/plain; charset=utf-8;'
+    interview_contents(@interview)
 end
 
-get '/:slug/?' do
-    @interview = Interview.first(:slug => params[:slug])
+get '/:slug/?' do |slug|
+    @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
 
-    haml :interview
+    haml :'interviews/show'
 end
 
 not_found do
-    haml :not_found, :layout => !request.xhr?
+    haml :not_found
 end
 
 error do
-    haml :error, :layout => !request.xhr?
+    haml :error
 end
