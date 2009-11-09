@@ -8,11 +8,6 @@
     * HAML                  http://haml-lang.com/
     * DataMapper            http://datamapper.org/
     * RDiscount             http://github.com/rtomayko/rdiscount
-    
-    Javascript it uses (for the adminy bit):
-    
-    * jQuery                http://jquery.com/
-    * jQuery Editable       http://www.appelsiini.net/projects/jeditable
-    
+
     Love,
     d.
