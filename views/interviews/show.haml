@@ -1,22 +1,13 @@
-- if has_auth?
-  %script{:type => 'text/javascript'}
-    var interview_slug = "#{@interview.slug}";
 %section{:id => @interview.slug}
   %article.overview
     %img{:src => "/images/portraits/#{@interview.slug}.jpg", :width => 500, :height => 335, :alt => @interview.person, :class => 'portrait'}
     - if @interview.credits
       :markdown
         #{@interview.credits}
-
     %h2.person= @interview.person
     %p.summary= @interview.summary
     - if @interview.published_at
       %time{:datetime => @interview.published_at.strftime("%Y-%m-%d")}= @interview.published_at.strftime("%b %d, %Y")
-    - else
-      %p.unpublished
-        Not published.
-        - if has_auth?
-          %a{:href => '#', :id => 'publish', :title => 'Publish this interview.'} Publish now
   %article.contents
     :markdown
-      #{@interview.contents_with_wares}
+      #{interview_contents(@interview)}
