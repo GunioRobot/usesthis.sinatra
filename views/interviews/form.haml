@@ -1,0 +1,37 @@
+- if @interview.errors.length > 0
+  %ul{:class => 'errors'}
+  - @interview.errors.each do |error|
+    %li= error
+- if @interview.new?
+  %p
+    %label{:for => 'slug'}Slug:
+    %br
+    %input{:type => 'text', :name => 'slug', :value => @interview.slug}
+%p
+  %label{:for => 'person'}Person:
+  %br
+  %input{:type => 'text', :name => 'person', :value => @interview.person}
+%p
+  %label{:for => 'summary'}Summary:
+  %br
+  %input{:type => 'text', :name => 'summary', :value => @interview.summary}
+%p
+  %label{:for => 'credits'}Credits:
+  %br
+  %input{:type => 'text', :name => 'credits', :value => @interview.credits}
+%p
+  %label{:for => 'overview'}Overview:
+  %br
+  %textarea{:name => 'overview', :rows => 15, :cols => 88}= @interview.overview
+%p
+  %label{:for => 'hardware'}Hardware:
+  %br
+  %textarea{:name => 'hardware', :rows => 15, :cols => 88}= @interview.hardware
+%p
+  %label{:for => 'software'}Software:
+  %br
+  %textarea{:name => 'software', :rows => 15, :cols => 88}= @interview.software
+%p
+  %label{:for => 'dream_setup'}Dream setup:
+  %br
+  %textarea{:name => 'dream_setup', :rows => 15, :cols => 88}= @interview.dream_setup
