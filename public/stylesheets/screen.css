@@ -128,23 +128,13 @@ margin: 0;
 font-size: 80%;
 }
 
-form.editor.interview input {
-font-size: 95%;
-color: inherit;
-}
-
-form.editor.ware {
-padding: 20px 15px 0 15px;
-}
-
-form.editor.ware p {
-padding: 0;
-margin: 2px 0;
+input[type=text] {
+font-size: 120%;
 }
 
 label {
-float: left;
-width: 100px;
+display: inline-block;
+margin-bottom: 10px;
 }
 
 p#admin {
