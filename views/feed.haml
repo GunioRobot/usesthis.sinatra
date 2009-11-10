@@ -19,4 +19,4 @@
           %p
             %img{:src => "http://usesthis.com/images/portraits/#{interview.slug}.jpg", :width => 500, :height => 335, :alt => interview.person}
             :markdown
-              #{interview.contents_with_wares}
+              #{interview_contents(interview)}
