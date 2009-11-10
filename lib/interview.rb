@@ -33,8 +33,6 @@ class Interview
     
     def link_to_wares
         [overview, hardware, software, dream_setup].each do |content|
-            puts "Looking at #{content}..."
-            
             links = content.scan(/\[([^\[\(\)]+)\]\[([a-z0-9\.\-]+)?\]/)
             if links.length > 0
                 links.each do |link|
