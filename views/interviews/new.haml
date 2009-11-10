@@ -1,0 +1,4 @@
+%form{:method => 'post', :action => '/interviews/new', :class => 'editor interview'}
+  = haml :'interviews/form', :layout => false
+  %p
+    %input{:type => 'submit', :value => 'Add'}
