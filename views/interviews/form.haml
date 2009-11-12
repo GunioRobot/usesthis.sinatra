@@ -2,6 +2,13 @@
   %ul{:class => 'errors'}
   - @interview.errors.each do |error|
     %li= error
+
+- if @interview.unknown_wares
+  %ul{:class => 'slugs'}
+    - @interview.unknown_wares.each do |slug|
+      %li
+        %a{:href => "/wares/new?slug=#{slug}", :title => "Create a new wares entry under '#{slug}'."}= slug
+  
 - if @interview.new?
   %p
     %label{:for => 'slug'}Slug:
@@ -20,18 +27,6 @@
   %br
   %input{:type => 'text', :name => 'credits', :value => @interview.credits}
 %p
-  %label{:for => 'overview'}Overview:
+  %label{:for => 'contents'}Contents:
   %br
-  %textarea{:name => 'overview', :rows => 15, :cols => 88}= @interview.overview
-%p
-  %label{:for => 'hardware'}Hardware:
-  %br
-  %textarea{:name => 'hardware', :rows => 15, :cols => 88}= @interview.hardware
-%p
-  %label{:for => 'software'}Software:
-  %br
-  %textarea{:name => 'software', :rows => 15, :cols => 88}= @interview.software
-%p
-  %label{:for => 'dream_setup'}Dream setup:
-  %br
-  %textarea{:name => 'dream_setup', :rows => 15, :cols => 88}= @interview.dream_setup
+  %textarea{:name => 'contents', :rows => 15, :cols => 88}= @interview.contents
