@@ -5,6 +5,3 @@
         %img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
         %h2= interview.person
       %p.summary= interview.summary
-  - if @count > 1
-    %p.pagination
-      = haml :pagination, :locals => {:path => '/'}, :layout => false
