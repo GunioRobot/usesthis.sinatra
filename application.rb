@@ -30,33 +30,7 @@ helpers do
     end
     
     def interview_url(interview)
-        ENV['RACK_ENV'] == 'production' ? "http://#{interview.slug}.usesthis.com/" : "/#{interview.slug}/"
-    end
-    
-    def interview_contents(interview)
-        result = <<END
-### Who are you and what do you do?
-#{interview.overview}
-
-### What hardware do you use?
-#{interview.hardware}
-
-### And what software?
-#{interview.software}
-
-### What would be your dream setup?
-#{interview.dream_setup}
-END
-        
-        if interview.wares.length > 0
-            result += "\r\n\r\n"
-        
-            interview.wares.each do |ware|
-                result += "[#{ware.slug}]: #{ware.url} \"#{ware.description}\"\n"
-            end
-        end
-
-        result
+        ENV['RACK_ENV'] == 'production' ? "http://#{interview.slug}.usesthis.com/" : "/interviews/#{interview.slug}/"
     end
     
     def needs_auth
@@ -68,8 +42,16 @@ END
     end
 end
 
-get '/' do
-    @count, @interviews = Interview.paginated(:published_at.not => nil, :page => current_page, :per_page => 10, :order => [:published_at.desc])
+not_found do
+    haml :not_found
+end
+
+error do
+    haml :error
+end
+
+get %r{^/(interviews/?)?$} do
+    @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
     haml :index
 end
 
@@ -104,7 +86,7 @@ end
 get '/interviews/new/?' do
     needs_auth
     
-    @interview = Interview.new
+    @interview = Interview.new(params)
     haml :'interviews/new'
 end
 
@@ -113,16 +95,45 @@ post '/interviews/new/?' do
     
     @interview = Interview.new(params)
     if @interview.save
-        redirect "/#{@interview.slug}/"
+        redirect "/interviews/#{@interview.slug}/"
     else
         haml :'interviews/new'
     end
 end
 
+get '/interviews/:slug/edit/?' do |slug|
+    needs_auth
+    
+    @interview = Interview.first(:slug => slug)
+    raise not_found unless @interview
+
+    haml :'interviews/edit', :layout => !request.xhr?
+end
+
+post '/interviews/:slug/edit/?' do |slug|
+    needs_auth
+    
+    @interview = Interview.first(:slug => slug)
+    raise not_found unless @interview
+    
+    if @interview.update(params)
+        redirect "/interviews/#{@interview.slug}/"
+    else
+        haml :'interviews/edit', :layout => !request.xhr?
+    end
+end
+
+get '/interviews/:slug/?' do |slug|
+    @interview = Interview.first(:slug => slug)
+    raise not_found unless @interview
+
+    haml :'interviews/show'
+end
+
 get '/wares/new/?' do
     needs_auth
     
-    @ware = Ware.new(:slug => params[:slug])
+    @ware = Ware.new(params)
     haml :'wares/new'
 end
 
@@ -137,47 +148,24 @@ post '/wares/new/?' do
     end
 end
 
-get '/:slug/edit/?' do |slug|
+get '/wares/:slug/edit/?' do |slug|
     needs_auth
     
-    @interview = Interview.first(:slug => slug)
-    raise not_found unless @interview
+    @ware = Ware.first(:slug => slug)
+    raise not_found unless @ware
 
-    haml :'interviews/edit'
+    haml :'wares/edit', :layout => !request.xhr?
 end
 
-post '/:slug/edit/?' do |slug|
+post '/wares/:slug/edit/?' do |slug|
     needs_auth
     
-    @interview = Interview.first(:slug => slug)
-    raise not_found unless @interview
+    @ware = Ware.first(:slug => slug)
+    raise not_found unless @ware
     
-    if @interview.update(params)
-        redirect "/#{@interview.slug}/"
+    if @ware.update(params)
+        redirect "/"
     else
-        haml :'interviews/edit'
+        haml :'wares/edit', :layout => !request.xhr?
     end
-end
-
-get '/:slug.markdown' do |slug|
-    @interview = Interview.first(:slug => slug)
-    raise not_found unless @interview
-    
-    content_type 'text/plain; charset=utf-8;'
-    interview_contents(@interview)
-end
-
-get '/:slug/?' do |slug|
-    @interview = Interview.first(:slug => slug)
-    raise not_found unless @interview
-
-    haml :'interviews/show'
-end
-
-not_found do
-    haml :not_found
-end
-
-error do
-    haml :error
 end
