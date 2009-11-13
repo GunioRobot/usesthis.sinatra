@@ -3,6 +3,8 @@
   %head
     %title= "#{@interview.person + " on " if @interview && @interview.person}The Setup"
     %link{:href => '/stylesheets/screen.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    - if has_auth?
+      %link{:href => '/stylesheets/admin.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/stylesheets/mobile.css', :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/feed', :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
     %meta{:charset => 'utf8'}
