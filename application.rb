@@ -107,7 +107,7 @@ get '/interviews/:slug/edit/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
 
-    haml :'interviews/edit', :layout => !request.xhr?
+    haml :'interviews/edit'
 end
 
 post '/interviews/:slug/edit/?' do |slug|
@@ -119,7 +119,7 @@ post '/interviews/:slug/edit/?' do |slug|
     if @interview.update(params)
         redirect "/interviews/#{@interview.slug}/"
     else
-        haml :'interviews/edit', :layout => !request.xhr?
+        haml :'interviews/edit'
     end
 end
 
@@ -154,7 +154,7 @@ get '/wares/:slug/edit/?' do |slug|
     @ware = Ware.first(:slug => slug)
     raise not_found unless @ware
 
-    haml :'wares/edit', :layout => !request.xhr?
+    haml :'wares/edit'
 end
 
 post '/wares/:slug/edit/?' do |slug|
@@ -166,6 +166,6 @@ post '/wares/:slug/edit/?' do |slug|
     if @ware.update(params)
         redirect "/"
     else
-        haml :'wares/edit', :layout => !request.xhr?
+        haml :'wares/edit'
     end
 end
