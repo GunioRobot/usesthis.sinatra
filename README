@@ -2,12 +2,11 @@
     The Setup is a Sinatra-based nerdy interviews web application, and lives
     at http://usesthis.com/. This is the source code, for better or worse.
 
-    Ruby gems it uses:
+    It uses some Ruby gems:
     
     * Sinatra (duh)         http://www.sinatrarb.com/
     * HAML                  http://haml-lang.com/
     * DataMapper            http://datamapper.org/
-    * RDiscount             http://github.com/rtomayko/rdiscount
 
     Love,
-    d.
+    d (at waferbaby dot com).
