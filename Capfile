@@ -27,7 +27,6 @@ namespace :deploy do
     
     task :symlink_shared do
       run "ln -nfs #{shared_path}/usesthis.yml #{deploy_to}/current/usesthis.yml"
-      run "ln -nfs #{shared_path}/javascripts/jquery.* #{deploy_to}/current/public/javascripts/"
     end
 end
 
