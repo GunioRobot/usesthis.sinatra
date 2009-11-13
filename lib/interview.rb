@@ -11,7 +11,7 @@ class Interview
     property :slug,         String, :key => true
     property :person,       String
     property :summary,      String, :length => 100
-    property :credits,      String, :length => 80
+    property :credits,      String, :length => 100
     property :contents,     Text
     property :published_at, DateTime
     
