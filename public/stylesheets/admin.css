@@ -1,0 +1,18 @@
+a[href^="/wares/"] {
+background-color: #000;
+color: #fff;
+}
+
+input[type=text] {
+font-size: 120%;
+width: 100%;
+}
+
+label {
+display: inline-block;
+margin-bottom: 10px;
+}
+
+textarea {
+width: 100%;
+}
