@@ -7,7 +7,6 @@ require 'rubygems'
 require 'sinatra'
 require 'datamapper'
 require 'haml'
-require 'rdiscount'
 
 Dir.glob('lib/*.rb') do |lib|
     require lib
