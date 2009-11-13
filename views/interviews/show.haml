@@ -3,7 +3,10 @@
   - if @interview.credits
     :markdown
       #{@interview.credits}
-  %h2.person= @interview.person
+  %h2.person
+    = @interview.person
+    - if has_auth?
+      %a{:href => "/interviews/#{@interview.slug}/edit", :title => 'Edit this interview.'} (Edit)
   %p.summary= @interview.summary
   - if @interview.published_at
     %time{:datetime => @interview.published_at.strftime("%Y-%m-%d")}= @interview.published_at.strftime("%b %d, %Y")
