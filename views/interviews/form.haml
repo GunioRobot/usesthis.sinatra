@@ -1,14 +1,7 @@
 - if @interview.errors.length > 0
   %ul{:class => 'errors'}
-  - @interview.errors.each do |error|
-    %li= error
-
-- if @interview.unknown_wares
-  %ul{:class => 'slugs'}
-    - @interview.unknown_wares.each do |slug|
-      %li
-        %a{:href => "/wares/new?slug=#{slug}", :title => "Create a new wares entry under '#{slug}'."}= slug
-  
+    - @interview.errors.each do |error|
+      %li= error
 - if @interview.new?
   %p
     %label{:for => 'slug'}Slug:
