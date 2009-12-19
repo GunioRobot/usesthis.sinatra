@@ -22,3 +22,9 @@ namespace :db do
         DataMapper.auto_upgrade!
     end
 end
+
+namespace :images do
+    task :sync do
+        exec "rsync --exclude '.DS_Store' -rv public/images/ usesthis.com:/usr/local/www/usesthis.com/current/public/images/"
+    end
+end
