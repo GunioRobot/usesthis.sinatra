@@ -12,6 +12,7 @@ class Interview
     property :person,       String
     property :summary,      String, :length => 100
     property :credits,      String, :length => 100
+    property :url,          String, :length => 150
     property :contents,     Text
     property :published_at, DateTime
     
