@@ -2,4 +2,5 @@
 *.tmproj
 *.esproj
 usesthis.yml
-public/javascripts/jquery*
+public/images
+public/fonts
