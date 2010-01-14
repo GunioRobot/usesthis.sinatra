@@ -30,7 +30,7 @@ namespace :deploy do
     end
     
     task :sync_public do
-        exec "rsync --exclude '.DS_Store' --exclude 'stylesheets' -rv public/ usesthis.com:/usr/local/www/usesthis.com/current/public/"
+        exec "rsync --progress --exclude '.DS_Store' --exclude 'stylesheets' -rcv public/ usesthis.com:/usr/local/www/usesthis.com/current/public/"
     end
 end
 
@@ -42,5 +42,5 @@ namespace :thin do
     end
 end
 
-after "deploy", "deploy:symlink_shared"
-after "deploy", "deploy:sync_public"
+after "deploy:symlink", "deploy:symlink_shared"
+after "deploy:symlink", "deploy:sync_public"
