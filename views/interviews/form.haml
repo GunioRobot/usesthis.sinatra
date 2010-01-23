@@ -25,7 +25,7 @@
   %select{:name => 'license'}
     %option{:value => ''} Default
     - @licenses.each do |license|
-      %option{:value => license.slug, :selected => @interview.license.slug == license.slug}= license.title
+      %option{:value => license.slug, :selected => @interview.license && @interview.license.slug == license.slug}= license.title
 %p
   %label{:for => 'contents'}Contents:
   %br
