@@ -94,12 +94,20 @@ end
 post '/interviews/new/?' do
     needs_auth
     
-    params["license"] = License.first(:slug => params["license"])
+    @interview = Interview.new(
+        :slug       => params["slug"],
+        :person     => params["person"],
+        :summary    => params["summary"],
+        :credits    => params["credits"],
+        :contents   => params["contents"]
+    )
     
-    @interview = Interview.new(params)
+    @interview.license = License.first(:slug => params["license"])
+    
     if @interview.save
         redirect "/interviews/#{@interview.slug}/"
     else
+        @licenses = License.all
         haml :'interviews/new'
     end
 end
@@ -121,10 +129,27 @@ post '/interviews/:slug/edit/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    params["license"] = License.first(:slug => params["license"])
-    if @interview.update(params)
+    @interview.attributes = {
+        :slug       => params["slug"],
+        :person     => params["person"],
+        :summary    => params["summary"],
+        :credits    => params["credits"],
+        :contents   => params["contents"]
+    }
+    
+    @interview.license = License.first(:slug => params["license"])
+    
+    case params["status"]
+        when 'draft':
+            @interview.published_at = nil unless @interview.published_at.nil?
+        when 'published':
+            @interview.published_at = Time.now if @interview.published_at.nil?
+    end
+    
+    if @interview.save
         redirect "/interviews/#{@interview.slug}/"
     else
+        @licenses = License.all
         haml :'interviews/edit'
     end
 end
