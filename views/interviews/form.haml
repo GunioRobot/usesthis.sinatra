@@ -30,3 +30,10 @@
   %label{:for => 'contents'}Contents:
   %br
   %textarea{:name => 'contents', :rows => 15, :cols => 88}= @interview.contents
+- unless @interview.new?
+  %p
+    %label{:for => 'status'}Status:
+    %br
+    %select{:name => 'status'}
+      %option{:value => 'draft', :selected => @interview.published_at.nil?}Draft
+      %option{:value => 'published', :selected => !@interview.published_at.nil?}Published
