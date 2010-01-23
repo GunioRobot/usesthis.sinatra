@@ -141,6 +141,11 @@ color: #888;
 font-size: 90%;
 }
 
+p.license {
+font-size: 90%;
+color: #444;
+}
+
 p.summary {
 color: #555;
 }
