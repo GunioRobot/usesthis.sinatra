@@ -13,3 +13,9 @@
 %article.contents
   :markdown
     #{@interview.contents_with_links}
+  
+  - if @interview.license
+    %p.license
+      This interview is licensed under the
+      %a{:href => @interview.license.url}= @interview.license.title
+      license.
