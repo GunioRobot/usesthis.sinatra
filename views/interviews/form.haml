@@ -20,6 +20,13 @@
   %br
   %input{:type => 'text', :name => 'credits', :value => @interview.credits}
 %p
+  %label{:for => 'license'}License:
+  %br
+  %select{:name => 'license'}
+    %option{:value => ''} Default
+    - @licenses.each do |license|
+      %option{:value => license.slug, :selected => @interview.license.slug == license.slug}= license.title
+%p
   %label{:for => 'contents'}Contents:
   %br
   %textarea{:name => 'contents', :rows => 15, :cols => 88}= @interview.contents
