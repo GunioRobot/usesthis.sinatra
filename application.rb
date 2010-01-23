@@ -86,11 +86,15 @@ get '/interviews/new/?' do
     needs_auth
     
     @interview = Interview.new(params)
+    @licenses = License.all
+    
     haml :'interviews/new'
 end
 
 post '/interviews/new/?' do
     needs_auth
+    
+    params["license"] = License.first(:slug => params["license"])
     
     @interview = Interview.new(params)
     if @interview.save
@@ -105,6 +109,8 @@ get '/interviews/:slug/edit/?' do |slug|
     
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
+    
+    @licenses = License.all
 
     haml :'interviews/edit'
 end
@@ -115,6 +121,7 @@ post '/interviews/:slug/edit/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
+    params["license"] = License.first(:slug => params["license"])
     if @interview.update(params)
         redirect "/interviews/#{@interview.slug}/"
     else
