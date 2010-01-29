@@ -30,7 +30,7 @@ namespace :deploy do
     end
     
     task :sync_public do
-        exec "rsync --progress --exclude '.DS_Store' --exclude 'stylesheets' -rcv public/ usesthis.com:/usr/local/www/usesthis.com/current/public/"
+        exec "rsync --progress --exclude '.DS_Store' --exclude 'stylesheets' -rv public/ usesthis.com:/usr/local/www/usesthis.com/current/public/"
     end
 end
 
