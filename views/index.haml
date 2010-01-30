@@ -1,8 +1,8 @@
 - if @interviews && @interviews.length > 0
   - @interviews.each do |interview|
     %article
-      %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}. This is a picture of them."}
-        %img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
       %h2{:class => 'interview'}
-        %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}= interview.person
+        %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+          %img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
+          = interview.person
       %p.summary= interview.summary
