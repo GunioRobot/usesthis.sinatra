@@ -12,7 +12,6 @@ text-decoration: none;
 
 a:hover {
 color: #fe2e9a !important;
-text-decoration: underline;
 }
 
 a:hover img {
@@ -56,13 +55,13 @@ color: #fe2e9a;
 }
 
 h1 a:hover {
-text-decoration: underline;
+color: #000 !important;
 }
 
 h2 {
 padding: 0;
-margin: 20px 0 5px 0;
-font-size: 190%;
+margin: 20px 0 0 0;
+font-size: 200%;
 font-weight: normal;
 }
 
@@ -74,20 +73,15 @@ font-size: 110%;
 }
 
 h2.interview {
-float: left;
-padding: 0;
-margin: 5px 0 15px 0;
-font-size: 140%;
+font-size: 150%;
 }
 
 h2.interview a {
 color: #000;
 }
 
-h2.interview:after {
-padding: 0 6px 0 2px;
-content: " / ";
-color: #ccc;
+h2.interview img {
+margin-bottom: 5px;
 }
 
 h3 {
@@ -127,9 +121,9 @@ color: #444;
 }
 
 p.summary {
-padding: 8px 0;
+padding: 4px 0;
 color: #555;
-font-size: 110%;
+font-size: 100%;
 }
 
 p.pagination {
