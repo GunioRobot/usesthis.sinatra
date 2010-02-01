@@ -2,38 +2,42 @@
   %ul{:class => 'errors'}
     - @interview.errors.each do |error|
       %li= error
-- if @interview.new?
+
+%form{:method => 'post', :action => "/interviews/#{@interview.new? ? 'new' : @interview.slug + '/edit'}"}
+  - if @interview.new?
+    %p
+      %label{:for => 'slug'}Slug:
+      %br
+      %input{:type => 'text', :name => 'slug', :value => @interview.slug}
   %p
-    %label{:for => 'slug'}Slug:
+    %label{:for => 'person'}Person:
     %br
-    %input{:type => 'text', :name => 'slug', :value => @interview.slug}
-%p
-  %label{:for => 'person'}Person:
-  %br
-  %input{:type => 'text', :name => 'person', :value => @interview.person}
-%p
-  %label{:for => 'summary'}Summary:
-  %br
-  %input{:type => 'text', :name => 'summary', :value => @interview.summary}
-%p
-  %label{:for => 'credits'}Credits:
-  %br
-  %input{:type => 'text', :name => 'credits', :value => @interview.credits}
-%p
-  %label{:for => 'license'}License:
-  %br
-  %select{:name => 'license'}
-    %option{:value => ''} Default
-    - @licenses.each do |license|
-      %option{:value => license.slug, :selected => @interview.license && @interview.license.slug == license.slug}= license.title
-%p
-  %label{:for => 'contents'}Contents:
-  %br
-  %textarea{:name => 'contents', :rows => 15, :cols => 88}= @interview.contents
-- unless @interview.new?
+    %input{:type => 'text', :name => 'person', :value => @interview.person}
   %p
-    %label{:for => 'status'}Status:
+    %label{:for => 'summary'}Summary:
     %br
-    %select{:name => 'status'}
-      %option{:value => 'draft', :selected => @interview.published_at.nil?}Draft
-      %option{:value => 'published', :selected => !@interview.published_at.nil?}Published
+    %input{:type => 'text', :name => 'summary', :value => @interview.summary}
+  %p
+    %label{:for => 'credits'}Credits:
+    %br
+    %input{:type => 'text', :name => 'credits', :value => @interview.credits}
+  %p
+    %label{:for => 'license'}License:
+    %br
+    %select{:name => 'license'}
+      %option{:value => ''} Default
+      - @licenses.each do |license|
+        %option{:value => license.slug, :selected => @interview.license && @interview.license.slug == license.slug}= license.title
+  %p
+    %label{:for => 'contents'}Contents:
+    %br
+    %textarea{:name => 'contents', :rows => 15, :cols => 88}= @interview.contents
+  - unless @interview.new?
+    %p
+      %label{:for => 'status'}Status:
+      %br
+      %select{:name => 'status'}
+        %option{:value => 'draft', :selected => @interview.published_at.nil?}Draft
+        %option{:value => 'published', :selected => !@interview.published_at.nil?}Published
+  %p
+    %input{:type => 'submit', :value => "Go"}
