@@ -88,7 +88,7 @@ get '/interviews/new/?' do
     @interview = Interview.new(params)
     @licenses = License.all
     
-    haml :'interviews/new'
+    haml :interview_form
 end
 
 post '/interviews/new/?' do
@@ -108,7 +108,7 @@ post '/interviews/new/?' do
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
-        haml :'interviews/new'
+        haml :interview_form
     end
 end
 
@@ -120,7 +120,7 @@ get '/interviews/:slug/edit/?' do |slug|
     
     @licenses = License.all
 
-    haml :'interviews/edit'
+    haml :interview_form
 end
 
 post '/interviews/:slug/edit/?' do |slug|
@@ -150,7 +150,7 @@ post '/interviews/:slug/edit/?' do |slug|
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
-        haml :'interviews/edit'
+        haml :interview_form
     end
 end
 
@@ -158,14 +158,14 @@ get '/interviews/:slug/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
 
-    haml :'interviews/show'
+    haml :interview
 end
 
 get '/wares/new/?' do
     needs_auth
     
     @ware = Ware.new(params)
-    haml :'wares/new'
+    haml :ware_form
 end
 
 post '/wares/new/?' do
@@ -175,7 +175,7 @@ post '/wares/new/?' do
     if @ware.save
         redirect '/'
     else
-        haml :'wares/new'
+        haml :ware_form
     end
 end
 
@@ -185,7 +185,9 @@ get '/wares/:slug/edit/?' do |slug|
     @ware = Ware.first(:slug => slug)
     raise not_found unless @ware
 
-    haml :'wares/edit'
+    @title = slug
+
+    haml :ware_form
 end
 
 post '/wares/:slug/edit/?' do |slug|
@@ -197,6 +199,6 @@ post '/wares/:slug/edit/?' do |slug|
     if @ware.update(params)
         redirect "/"
     else
-        haml :'wares/edit'
+        haml :ware_form
     end
 end
