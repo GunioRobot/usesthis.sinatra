@@ -158,6 +158,8 @@ get '/interviews/:slug/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
 
+    @title = "An interview with #{@interview.person} on "
+
     haml :interview
 end
 
