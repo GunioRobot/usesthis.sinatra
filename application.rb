@@ -13,7 +13,7 @@ Dir.glob('lib/*.rb') do |lib|
 end
 
 configure do
-    @config = YAML.load_file('usesthis.yml')
+    @config = YAML.load_file(File.join('conf', 'settings.yml'))
     DataMapper.setup(:default, @config[:database])
     
     set :admin_username, @config[:admin][:name]
@@ -29,7 +29,7 @@ helpers do
     end
     
     def interview_url(interview)
-        ENV['RACK_ENV'] == 'production' ? "http://#{interview.slug}.usesthis.com/" : "/interviews/#{interview.slug}/"
+        development? ? "/interviews/#{interview.slug}/" : "http://#{interview.slug}.usesthis.com/"
     end
     
     def needs_auth
@@ -39,6 +39,10 @@ helpers do
     def has_auth?
         session[:authorised] == true
     end
+end
+
+before do
+    response['Cache-Control'] = "public, max-age=600" unless development?
 end
 
 not_found do
