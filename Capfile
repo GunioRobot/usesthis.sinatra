@@ -26,7 +26,7 @@ namespace :deploy do
     end
     
     task :symlink_shared do
-        run "ln -nfs #{shared_path}/usesthis.yml #{deploy_to}/current/usesthis.yml"
+        run "ln -nfs #{shared_path}/conf/settings.yml #{deploy_to}/current/conf/settings.yml"
     end
     
     task :sync_public do
@@ -37,7 +37,7 @@ end
 namespace :thin do
     %w(start stop restart).each do |action|
         task action.to_sym, :roles => :app do
-            run "/var/lib/gems/1.8/bin/thin #{action} -C #{deploy_to}/current/thin.yml"
+            run "/var/lib/gems/1.8/bin/thin #{action} -C #{deploy_to}/current/conf/thin.yml"
         end
     end
 end
