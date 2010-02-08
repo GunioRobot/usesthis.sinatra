@@ -1,6 +1,6 @@
 .DS_Store
 *.tmproj
 *.esproj
-usesthis.yml
+conf/settings.yml
 public/images
 public/fonts
