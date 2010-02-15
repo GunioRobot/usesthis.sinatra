@@ -1,4 +1,11 @@
-ENV['RACK_ENV'] = "production"
+require 'rubygems'
+require 'sinatra'
 
-require File.join(File.dirname(__FILE__), 'application.rb')
+Sinatra::Application.set(
+    :run            => false,
+    :environment    => :production,
+    :app_file       => '../application.rb'
+)
+
+require 'application'
 run Sinatra::Application
