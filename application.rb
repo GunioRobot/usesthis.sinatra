@@ -40,8 +40,8 @@ helpers do
         session[:authorised] == true
     end
     
-    def etag_for_interviews(interviews)
-        tag = ''
+    def etag_for_interviews(interviews, key)
+        tag = "#{key}:"
 
         interviews.each do |interview|
             tag += interview.person + interview.updated_at.strftime('%c')
@@ -65,7 +65,7 @@ end
 
 get %r{^/(interviews/?)?$} do
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
-    etag_for_interviews(@interviews) unless @interviews.nil?
+    etag_for_interviews(@interviews, 'index') unless @interviews.nil?
     
     haml :index
 end
@@ -78,7 +78,7 @@ get '/feed/?' do
     content_type 'application/atom+xml', :charset => 'utf-8'
 
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
-    etag_for_interviews(@interviews) unless @interviews.nil?
+    etag_for_interviews(@interviews, 'feed') unless @interviews.nil?
     
     haml :feed, {:format => :xhtml, :layout => false}
 end
