@@ -8,7 +8,7 @@ namespace :db do
             require lib
         end
         
-        @config = YAML.load_file('usesthis.yml')
+        @config = YAML.load_file(File.join('conf', 'settings.yml'))
         DataMapper.setup(:default, @config[:database])
     end
     
