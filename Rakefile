@@ -23,9 +23,9 @@ namespace :db do
     end
 end
 
-namespace :public do
-    desc 'Sync the public/ directory.'
-    task :sync do
-        exec "cap deploy:sync_public"
+namespace :sync do
+    desc 'Syncs the images directory with the current site.'
+    task :images do
+        exec "rsync -rv --progress --exclude '.DS_Store' public/images/ usesthis.com:/usr/local/www/usesthis.com/current/public/images/"
     end
 end
