@@ -2,5 +2,4 @@
 *.tmproj
 *.esproj
 conf/settings.yml
-public/images
 public/fonts
