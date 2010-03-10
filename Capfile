@@ -27,11 +27,7 @@ namespace :deploy do
     
     task :symlink_shared do
         run "ln -nfs #{shared_path}/conf/settings.yml #{deploy_to}/current/conf/settings.yml"
-        run "ln -nfs #{shared_path}/public/fonts/ #{deploy_to}/current/public/fonts"
-    end
-    
-    task :sync_public do
-        exec "rsync -rv --progress --exclude '.DS_Store' public/images/ usesthis.com:/usr/local/www/usesthis.com/current/public/images/"
+        run "ln -nfs /usr/local/www/shared/fonts/ #{deploy_to}/current/public/fonts"
     end
 end
 
