@@ -101,6 +101,15 @@ margin: 0;
 font-size: 80%;
 }
 
+li {
+padding: 8px 0;
+}
+
+ol, ul {
+padding: 0 30px;
+font-size: 90%;
+}
+
 p#admin {
 font-size: 70%;
 padding: 0 0 10px 0;
@@ -135,13 +144,4 @@ color: #aaa;
 
 time:before {
 content: "Published ";
-}
-
-ul {
-padding: 0 30px;
-font-size: 95%;
-}
-
-ul li {
-padding: 8px 0;
 }
