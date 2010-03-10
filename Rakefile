@@ -22,10 +22,3 @@ namespace :db do
         DataMapper.auto_upgrade!
     end
 end
-
-namespace :sync do
-    desc 'Syncs the images directory with the current site.'
-    task :images do
-        exec "rsync -rv --progress --exclude '.DS_Store' public/images/ usesthis.com:/usr/local/www/usesthis.com/current/public/images/"
-    end
-end
