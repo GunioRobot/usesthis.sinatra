@@ -27,10 +27,11 @@ namespace :deploy do
     
     task :symlink_shared do
         run "ln -nfs #{shared_path}/conf/settings.yml #{deploy_to}/current/conf/settings.yml"
+        run "ln -nfs #{shared_path}/public/fonts/ #{deploy_to}/current/public/fonts"
     end
     
     task :sync_public do
-        exec "rsync --progress --exclude '.DS_Store' --exclude 'stylesheets' -rv public/ usesthis.com:/usr/local/www/usesthis.com/current/public/"
+        exec "rsync -rv --progress --exclude '.DS_Store' public/images/ usesthis.com:/usr/local/www/usesthis.com/current/public/images/"
     end
 end
 
@@ -43,4 +44,3 @@ namespace :thin do
 end
 
 after "deploy:symlink", "deploy:symlink_shared"
-after "deploy:symlink", "deploy:sync_public"
