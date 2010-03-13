@@ -3,8 +3,16 @@ font-family: "droid sans";
 src: url("/fonts/droid_sans.ttf");
 }
 
+.summary {
+padding: 4px 0;
+color: #555;
+font-size: 95%;
+}
+
 a {
+background-color: #ececec;
 color: #666;
+padding: 2px;
 text-decoration: none;
 }
 
@@ -16,15 +24,6 @@ a:hover img {
 opacity: 0.8;
 }
 
-article.contents a, article.overview a {
-padding: 2px;
-background-color: #ececec;
-}
-
-article p {
-line-height: 25px;
-}
-
 body {
 width: 502px;
 padding: 50px 0;
@@ -32,6 +31,7 @@ background-color: #fff;
 color: #000;
 margin: auto;
 text-align: left;
+line-height: 25px;
 font-family: "droid sans", helvetica, serif;
 }
 
@@ -53,6 +53,7 @@ font-weight: normal;
 }
 
 h1 a {
+background-color: transparent;
 color: #fe2e9a;
 }
 
@@ -63,7 +64,7 @@ color: #000 !important;
 h2 {
 padding: 0;
 margin: 20px 0 0 0;
-font-size: 170%;
+font-size: 150%;
 font-weight: normal;
 }
 
@@ -72,14 +73,6 @@ padding: 0;
 margin: 0;
 color: #555;
 font-size: 110%;
-}
-
-h2.interview a {
-color: #000;
-}
-
-h2.interview img {
-margin-bottom: 5px;
 }
 
 h3 {
@@ -127,12 +120,6 @@ font-size: 90%;
 color: #444;
 }
 
-p.summary {
-padding: 4px 0;
-color: #555;
-font-size: 100%;
-}
-
 p.pagination {
 text-align: center;
 }
@@ -144,4 +131,24 @@ color: #aaa;
 
 time:before {
 content: "Published ";
+}
+
+ul#interviews {
+list-style: none inside;
+padding: 0;
+margin: 0;
+}
+
+ul#interviews a {
+background-color: transparent;
+font-size: 150%;
+color: #000;
+}
+
+ul#interviews a img {
+margin-bottom: 5px;
+}
+
+ul#interviews span {
+line-height: 5px;
 }
