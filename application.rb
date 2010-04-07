@@ -225,3 +225,8 @@ post '/wares/:slug/edit/?' do |slug|
         haml :ware_form
     end
 end
+
+get '/wares/?' do
+    @wares = Ware.all(:order => [:slug.asc])
+    haml :wares
+end
