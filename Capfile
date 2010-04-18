@@ -39,4 +39,10 @@ namespace :thin do
     end
 end
 
+namespace :sync do
+    task :images do
+        run "cd #{deploy_to}/current/public/images && git pull"
+    end
+end
+
 after "deploy:symlink", "deploy:symlink_shared"
