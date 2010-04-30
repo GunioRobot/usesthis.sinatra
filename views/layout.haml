@@ -2,25 +2,25 @@
 %html{html_attrs}
   %head
     %title #{"#{@title} : " if @title}The Setup
-    %link{:href => '/stylesheets/screen.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    %link{:href => '/stylesheets/mobile.css', :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => "#{domain_prefix}/stylesheets/screen.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => "#{domain_prefix}/stylesheets/mobile.css", :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
     - if has_auth?
-      %link{:href => '/stylesheets/admin.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    %link{:href => '/feed', :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
+      %link{:href => "#{domain_prefix}/stylesheets/admin.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => "#{domain_prefix}/feed", :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
     %meta{:charset => 'utf-8'}
     %meta{:name => 'viewport', :content => 'width=device-width'}
   %body
     %header
       %h1
-        %a{:href => "http://usesthis.com/", :title => "This is The Setup, a bunch of nerdy interviews."} the setup
+        %a{:href => "#{domain_prefix}/", :title => "This is The Setup, a bunch of nerdy interviews."} the setup
         is a bunch of nerdy interviews
       %p#tagline What do people use to get the job done?
     %navigation
       %ul
         %li
-          %a{:href => '/about', :title => 'A little more info about the site.'}About
+          %a{:href => "#{domain_prefix}/about", :title => 'A little more info about the site.'}About
         %li
-          %a{:href => '/community', :title => 'Other interviews by people like you.'}Community
+          %a{:href => "#{domain_prefix}/community", :title => 'Other interviews by people like you.'}Community
     %section{:id => 'contents'}
       = yield
     %footer
