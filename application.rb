@@ -68,6 +68,10 @@ get '/about/?' do
     haml :about
 end
 
+get '/community/?' do
+    haml :community
+end
+
 get '/feed/?' do
     content_type 'application/atom+xml', :charset => 'utf-8'
 
