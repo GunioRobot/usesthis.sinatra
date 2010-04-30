@@ -3,9 +3,9 @@
   %head
     %title #{"#{@title} : " if @title}The Setup
     %link{:href => '/stylesheets/screen.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+    %link{:href => '/stylesheets/mobile.css', :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
     - if has_auth?
       %link{:href => '/stylesheets/admin.css', :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    %link{:href => '/stylesheets/mobile.css', :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
     %link{:href => '/feed', :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
     %meta{:charset => 'utf-8'}
     %meta{:name => 'viewport', :content => 'width=device-width'}
@@ -15,6 +15,12 @@
         %a{:href => "http://usesthis.com/", :title => "This is The Setup, a bunch of nerdy interviews."} the setup
         is a bunch of nerdy interviews
       %p#tagline What do people use to get the job done?
+    %navigation
+      %ul
+        %li
+          %a{:href => '/about', :title => 'A little more info about the site.'}About
+        %li
+          %a{:href => '/community', :title => 'Other interviews by people like you.'}Community
     %section{:id => 'contents'}
       = yield
     %footer
