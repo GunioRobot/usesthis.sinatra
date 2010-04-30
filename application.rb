@@ -32,6 +32,10 @@ helpers do
         development? ? "/interviews/#{interview.slug}/" : "http://#{interview.slug}.usesthis.com/"
     end
     
+    def domain_prefix
+        development? ? '' : 'http://usesthis.com'
+    end
+    
     def needs_auth
         raise not_found unless has_auth?
     end
