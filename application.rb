@@ -5,6 +5,7 @@
 
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/cache'
 require 'datamapper'
 require 'haml'
 
@@ -18,7 +19,12 @@ configure do
     
     set :admin_username, @config[:admin][:name]
     set :admin_password, @config[:admin][:password]
+    
     set :haml, {:format => :html5}
+    
+    set :cache_enabled, true
+    set :cache_environment, :development
+    set :cache_output_dir, File.dirname(__FILE__) + '/public/cache'
 
     enable :sessions
 end
