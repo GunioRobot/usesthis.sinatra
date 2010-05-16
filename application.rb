@@ -24,7 +24,7 @@ configure do
     
     set :cache_enabled, true
     set :cache_environment, :development
-    set :cache_output_dir, File.dirname(__FILE__) + '/public/cache'
+    set :cache_output_dir, File.dirname(__FILE__) + '/public/system/cache'
 
     enable :sessions
 end
