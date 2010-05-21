@@ -3,6 +3,10 @@ font-family: "droid sans";
 src: url("/fonts/droid_sans.ttf");
 }
 
+.fusionentire {
+display: block;
+}
+
 .summary {
 padding: 4px 0;
 color: #555;
@@ -24,8 +28,21 @@ a:hover img {
 opacity: 0.8;
 }
 
+aside#sidebar {
+float: right;
+width: 130px;
+padding: 0 10px;
+font-size: 60%;
+line-height: 15px;
+}
+
+aside#sidebar a {
+padding: 0;
+background-color: transparent;
+}
+
 body {
-width: 502px;
+width: 680px;
 padding: 50px 0;
 background-color: #fff;
 color: #000;
@@ -40,6 +57,10 @@ color: #999;
 font-size: 80%;
 }
 
+footer p {
+clear: left;
+}
+
 footer p:first-child {
 padding-top: 30px;
 }
@@ -48,7 +69,7 @@ h1 {
 padding: 0;
 margin: 0;
 color: #000;
-font-size: 170%;
+font-size: 200%;
 font-weight: normal;
 }
 
@@ -83,6 +104,11 @@ border-bottom: solid 1px #ccc;
 
 img {
 border: solid 1px #000;
+}
+
+img.fusionimg {
+margin-bottom: 10px;
+border: 0;
 }
 
 img.portrait + p {
@@ -127,7 +153,7 @@ padding: 0 0 10px 0;
 }
 
 p#tagline {
-padding: 5px 0;
+padding: 10px 0 5px 0;
 margin: 0;
 color: #888;
 font-size: 90%;
@@ -140,6 +166,13 @@ color: #444;
 
 p.pagination {
 text-align: center;
+}
+
+section#contents {
+width: 500px;
+padding: 0 20px 0 0;
+float: left;
+border-right: dotted 1px #ccc;
 }
 
 time {
@@ -168,6 +201,7 @@ margin-bottom: 5px;
 }
 
 ul#interviews li {
+padding: 0;
 margin-bottom: 10px;
 }
 
