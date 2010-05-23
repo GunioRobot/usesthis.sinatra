@@ -55,11 +55,11 @@ before do
 end
 
 not_found do
-    haml :not_found
+    haml :not_found, :cache => false
 end
 
 error do
-    haml :error
+    haml :error, :cache => false
 end
 
 get %r{^/(interviews/?)?$} do
@@ -91,7 +91,7 @@ get '/feed/?' do
         last_modified(@interviews[0].updated_at)
     end
     
-    haml :feed, {:format => :xhtml, :layout => false}
+    haml :feed, {:format => :xhtml, :layout => false, :cache => false}
 end
 
 get '/login/?' do
@@ -117,7 +117,7 @@ get '/interviews/new/?' do
     @interview = Interview.new(params)
     @licenses = License.all
     
-    haml :interview_form
+    haml :interview_form, :cache => false
 end
 
 post '/interviews/new/?' do
@@ -137,7 +137,7 @@ post '/interviews/new/?' do
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
-        haml :interview_form
+        haml :interview_form, :cache => false
     end
 end
 
@@ -149,7 +149,7 @@ get '/interviews/:slug/edit/?' do |slug|
     
     @licenses = License.all
 
-    haml :interview_form
+    haml :interview_form, :cache => false
 end
 
 post '/interviews/:slug/edit/?' do |slug|
@@ -179,7 +179,7 @@ post '/interviews/:slug/edit/?' do |slug|
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
-        haml :interview_form
+        haml :interview_form, :cache => false
     end
 end
 
@@ -194,14 +194,14 @@ get '/interviews/:slug/?' do |slug|
 
     @title = "An interview with #{@interview.person}"
 
-    haml :interview
+    haml :interview, :cache => false
 end
 
 get '/wares/new/?' do
     needs_auth
     
     @ware = Ware.new(params)
-    haml :ware_form
+    haml :ware_form, :cache => false
 end
 
 post '/wares/new/?' do
@@ -211,7 +211,7 @@ post '/wares/new/?' do
     if @ware.save
         redirect '/'
     else
-        haml :ware_form
+        haml :ware_form, :cache => false
     end
 end
 
@@ -223,7 +223,7 @@ get '/wares/:slug/edit/?' do |slug|
 
     @title = slug
 
-    haml :ware_form
+    haml :ware_form, :cache => false
 end
 
 post '/wares/:slug/edit/?' do |slug|
@@ -235,11 +235,11 @@ post '/wares/:slug/edit/?' do |slug|
     if @ware.update(params)
         redirect "/"
     else
-        haml :ware_form
+        haml :ware_form, :cache => false
     end
 end
 
 get '/wares/?' do
     @wares = Ware.all(:order => [:slug.asc])
-    haml :wares
+    haml :wares, :cache => false
 end
