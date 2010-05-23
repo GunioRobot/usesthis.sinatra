@@ -23,7 +23,7 @@ configure do
     set :haml, {:format => :html5}
     
     set :cache_enabled, true
-    set :cache_output_dir, File.dirname(__FILE__) + '/public'
+    set :cache_output_dir, File.dirname(__FILE__) + '/public/system/cache'
 
     enable :sessions
 end
