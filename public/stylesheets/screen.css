@@ -7,16 +7,9 @@ src: url("/fonts/droid_sans.ttf");
 display: block;
 }
 
-.summary {
-padding: 4px 0;
-color: #555;
-font-size: 95%;
-}
-
 a {
 background-color: #ececec;
 color: #666;
-padding: 2px;
 text-decoration: none;
 }
 
@@ -84,7 +77,7 @@ color: #000 !important;
 
 h2 {
 padding: 0;
-margin: 20px 0 0 0;
+margin: 0;
 font-size: 150%;
 font-weight: normal;
 }
@@ -109,6 +102,10 @@ border: solid 1px #000;
 img.fusionimg {
 margin-bottom: 10px;
 border: 0;
+}
+
+img.portrait, img.thumbnail {
+margin-bottom: 5px;
 }
 
 img.portrait + p {
@@ -168,6 +165,13 @@ p.pagination {
 text-align: center;
 }
 
+p.summary {
+padding: 0;
+margin: 0;
+color: #555;
+font-size: 95%;
+}
+
 section#contents {
 width: 500px;
 padding: 0 20px 0 0;
@@ -176,7 +180,7 @@ border-right: dotted 1px #ccc;
 }
 
 time {
-font-size: 85%;
+font-size: 80%;
 color: #aaa;
 }
 
@@ -184,27 +188,11 @@ time:before {
 content: "Published ";
 }
 
-ul#interviews {
-list-style: none inside;
-padding: 0;
-margin: 0;
+article.interview {
+margin-bottom: 20px;
 }
 
-ul#interviews a {
+article.interview a {
 background-color: transparent;
-font-size: 150%;
 color: #000;
-}
-
-ul#interviews a img {
-margin-bottom: 5px;
-}
-
-ul#interviews li {
-padding: 0;
-margin-bottom: 25px;
-}
-
-ul#interviews span {
-line-height: 5px;
 }
