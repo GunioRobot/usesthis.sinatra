@@ -66,12 +66,12 @@ font-size: 200%;
 font-weight: normal;
 }
 
-h1 a, navigation a {
+h1 a, nav a {
 background-color: transparent;
 color: #fe2e9a;
 }
 
-h1 a:hover, navigation a:hover {
+h1 a:hover, nav a:hover {
 color: #000 !important;
 }
 
@@ -118,7 +118,7 @@ li {
 padding: 3px 0;
 }
 
-navigation ul {
+nav ul {
 padding: 5px 0;
 margin: 0 0 15px 0;
 font-size: 75%;
@@ -126,15 +126,15 @@ border-top: dotted 1px #ccc;
 border-bottom: dotted 1px #ccc;
 }
 
-navigation ul li {
+nav ul li {
 display: inline;
 }
 
-navigation ul li:before {
+nav ul li:before {
 content: "/";
 }
 
-navigation ul li:first-child:before {
+nav ul li:first-child:before {
 content: "";
 margin-left: -4px;
 }
