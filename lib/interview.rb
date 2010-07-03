@@ -18,8 +18,8 @@ class Interview
     
     timestamps :at
     
-    validates_is_unique :slug
-    validates_present :person, :summary, :contents
+    validates_uniqueness_of :slug
+    validates_uniqueness_of :person, :summary, :contents
     
     has n, :wares, :through => Resource
     has 1, :license, :through => Resource

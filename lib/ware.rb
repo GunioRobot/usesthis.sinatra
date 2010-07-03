@@ -15,8 +15,8 @@ class Ware
     
     timestamps :at
     
-    validates_is_unique :slug
-    validates_present :title, :url, :description
+    validates_uniqueness_of :slug
+    validates_presence_of :title, :url, :description
     
     has n, :interviews, :through => Resource
 end
