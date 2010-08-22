@@ -19,4 +19,5 @@ class Ware
     validates_presence_of :title, :url, :description
     
     has n, :interviews, :through => Resource
+    has 1, :platform, :through => Resource
 end

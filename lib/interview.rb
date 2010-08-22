@@ -22,6 +22,7 @@ class Interview
     validates_uniqueness_of :person, :summary, :contents
     
     has n, :wares, :through => Resource
+    has n, :platforms, :through => Resource
     has 1, :license, :through => Resource
     
     before :create, :link_wares
