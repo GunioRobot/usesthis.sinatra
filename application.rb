@@ -194,7 +194,7 @@ get '/interviews/:slug/?' do |slug|
 
     @title = "An interview with #{@interview.person}"
 
-    haml :interview, :cache => false
+    haml :interview
 end
 
 get '/wares/new/?' do
