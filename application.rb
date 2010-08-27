@@ -176,6 +176,7 @@ post '/interviews/:slug/edit/?' do |slug|
     end
     
     if @interview.save
+        cache_expire("/interviews/#{@interview.slug}/")
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
