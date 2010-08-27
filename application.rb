@@ -173,6 +173,7 @@ post '/interviews/:slug/edit/?' do |slug|
             @interview.published_at = nil unless @interview.published_at.nil?
         when 'published':
             @interview.published_at = Time.now if @interview.published_at.nil?
+            cache_expire("/")
     end
     
     if @interview.save
