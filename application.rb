@@ -22,7 +22,7 @@ configure do
     
     set :haml, {:format => :html5}
     
-    set :cache_enabled, true
+    set :cache_enabled, !development?
     set :cache_output_dir, File.dirname(__FILE__) + '/public/system/cache'
 
     enable :sessions
@@ -65,7 +65,7 @@ end
 get %r{^/(interviews/?)?$} do
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
     
-    unless @interviews.empty? || has_auth?
+    unless @interviews.empty? || development? || has_auth?
         etag(Digest::MD5.hexdigest("index:" + @interviews[0].updated_at.to_s))
         last_modified(@interviews[0].updated_at)
     end
@@ -86,7 +86,7 @@ get '/feed/?' do
 
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
     
-    unless @interviews.empty? || has_auth?
+    unless @interviews.empty? || development? || has_auth?
         etag(Digest::MD5.hexdigest("feed:" + @interviews[0].updated_at.to_s))
         last_modified(@interviews[0].updated_at)
     end
@@ -189,7 +189,7 @@ get '/interviews/:slug/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    unless has_auth?
+    unless development? || has_auth?
         etag(Digest::MD5.hexdigest(@interview.slug + ':' + @interview.updated_at.to_s))
         last_modified(@interview.updated_at)
     end
