@@ -10,6 +10,7 @@ class Ware
     
     property :slug,         String, :key => true
     property :title,        String
+    property :type,         Discriminator
     property :url,          String, :length => 250
     property :description,  String, :length => 100
     
@@ -20,4 +21,10 @@ class Ware
     
     has n, :interviews, :through => Resource
     has 1, :platform, :through => Resource
+end
+
+class Hardware < Ware
+end
+
+class Software < Ware
 end
