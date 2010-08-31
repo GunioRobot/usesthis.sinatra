@@ -111,6 +111,52 @@ get '/logout/?' do
     redirect '/'
 end
 
+# Brands
+
+get '/brands/new/?' do
+    needs_auth
+    
+    @brand = Brand.new(params)
+    haml :brand_form, :cache => false
+end
+
+post '/brands/new/?' do
+    needs_auth
+
+    @brand = Brand.new(params)
+    if @brand.save
+        redirect '/'
+    else
+        haml :brand_form, :cache => false
+    end
+end
+
+get '/brands/:slug/edit/?' do |slug|
+    needs_auth
+    
+    @brand = Brand.first(:slug => slug)
+    raise not_found unless @brand
+
+    @title = slug
+
+    haml :brand_form, :cache => false
+end
+
+post '/brands/:slug/edit/?' do |slug|
+    needs_auth
+    
+    @brand = Brand.first(:slug => slug)
+    raise not_found unless @brand
+    
+    if @brand.update(params)
+        redirect "/"
+    else
+        haml :brand_form, :cache => false
+    end
+end
+
+# Interviews
+
 get '/interviews/new/?' do
     needs_auth
     
@@ -199,10 +245,14 @@ get '/interviews/:slug/?' do |slug|
     haml :interview
 end
 
+# Wares
+
 get '/wares/new/?' do
     needs_auth
     
     @ware = Ware.new(params)
+    @brands = Brand.all
+    
     haml :ware_form, :cache => false
 end
 
@@ -210,9 +260,12 @@ post '/wares/new/?' do
     needs_auth
 
     @ware = Ware.new(params)
+    @ware.brand = Brand.first(:slug => params["brand"])
+    
     if @ware.save
         redirect '/'
     else
+        @brands = Brand.all
         haml :ware_form, :cache => false
     end
 end
@@ -224,6 +277,7 @@ get '/wares/:slug/edit/?' do |slug|
     raise not_found unless @ware
 
     @title = slug
+    @brands = Brand.all
 
     haml :ware_form, :cache => false
 end
@@ -234,14 +288,26 @@ post '/wares/:slug/edit/?' do |slug|
     @ware = Ware.first(:slug => slug)
     raise not_found unless @ware
     
-    if @ware.update(params)
+    @ware.attributes = {
+        :slug           => params["slug"],
+        :title          => params["title"],
+        :url            => params["url"],
+        :description    => params["description"],
+    }
+    
+    @ware.brand = Brand.first(:slug => params["brand"])
+        
+    if @ware.save
         redirect "/"
     else
+        @brands = Brand.all
         haml :ware_form, :cache => false
     end
 end
 
-get '/wares/?' do
-    @wares = Ware.all(:order => [:slug.asc])
-    haml :wares, :cache => false
+get %r{^/(hardware|software)/?$} do |type|
+    
+    @wares = eval(type.capitalize).all(:order => :title)
+
+    haml :wares
 end
