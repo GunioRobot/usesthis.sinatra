@@ -2,6 +2,7 @@ require 'rake'
 
 namespace :db do
     task :prepare do
+        require 'rubygems'
         require 'datamapper'
         
         Dir.glob('lib/*') do |lib|
