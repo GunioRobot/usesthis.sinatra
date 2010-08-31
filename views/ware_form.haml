@@ -18,4 +18,11 @@
     %label{:for => 'url'} URL:
     %input{:type => 'text', :name => 'url', :value => @ware.url}
   %p
+    %label{:for => 'brand'}Brand:
+    %br
+    %select{:name => 'brand'}
+      %option{:value => ''} Default
+      - @brands.each do |brand|
+        %option{:value => brand.slug, :selected => @ware.brand && @ware.brand.slug == brand.slug}= brand.title
+  %p
     %input{:type => 'submit', :value => 'Go'}
