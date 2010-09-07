@@ -1,8 +1,12 @@
 - if @interviews && @interviews.length > 0
-	- @interviews.each do |interview|
-		%article.interview
-			%h2.person
-				%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}>
-					%img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}>
-					= interview.person
-			%p.summary>= interview.summary
+	%article.interview.latest
+		%a{:href => interview_url(@interviews[0]), :title => "View an interview with #{@interviews[0].person}."}
+			%img{:src => "/images/portraits/#{@interviews[0].slug}.jpg", :width => 500, :height => 335, :alt => @interviews[0].person, :class => 'portrait'}
+			%h2.person= @interviews[0].person
+		%p.summary= @interviews[0].summary	
+	- @interviews.to_a[1..-1].each do |interview|
+		%article.interview.recent
+			%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+				%img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
+				%h2.person= interview.person				
+			%p.summary= interview.summary
