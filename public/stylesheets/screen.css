@@ -10,7 +10,7 @@ display: block;
 a {
 background-color: #ececec;
 color: #666;
-text-decoration: none;
+text-decoration: underline;
 }
 
 a:hover {
@@ -19,6 +19,15 @@ color: #fe2e9a !important;
 
 a:hover img {
 opacity: 0.8;
+}
+
+article.interview {
+margin-bottom: 20px;
+}
+
+article.interview a {
+background-color: transparent;
+color: #000;
 }
 
 aside#sidebar {
@@ -187,13 +196,4 @@ color: #aaa;
 
 time:before {
 content: "Published ";
-}
-
-article.interview {
-margin-bottom: 20px;
-}
-
-article.interview a {
-background-color: transparent;
-color: #000;
 }
