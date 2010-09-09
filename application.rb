@@ -295,7 +295,7 @@ post '/wares/:slug/edit/?' do |slug|
         :description    => params["description"],
     }
     
-    @ware.brand = Brand.first(:slug => params["brand"])
+    @ware.brand = Brand.first(:slug => params["brand"]) unless params["brand"].empty?
         
     if @ware.save
         redirect "/"
