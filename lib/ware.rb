@@ -21,7 +21,7 @@ class Ware
     
     has n, :interviews, :through => Resource
     has n, :platforms, :through => Resource
-    belongs_to :brand
+    belongs_to :brand, :required => false
 end
 
 class Hardware < Ware
