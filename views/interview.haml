@@ -3,10 +3,10 @@
   - if @interview.credits
     :markdown
       #{@interview.credits}
-  %h2.person= @interview.person
-  %p.summary= @interview.summary
   - if @interview.published_at
     %time{:datetime => @interview.published_at.strftime("%Y-%m-%d")}= @interview.published_at.strftime("%b %d, %Y")
+  %h2.person= @interview.person
+  %p.summary= @interview.summary
 %article.contents
   :markdown
     #{@interview.contents_with_links}
