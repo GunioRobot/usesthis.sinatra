@@ -1,12 +1,24 @@
 - if @interviews && @interviews.length > 0
-	%article.interview.latest
-		%a{:href => interview_url(@interviews[0]), :title => "View an interview with #{@interviews[0].person}."}
-			%img{:src => "/images/portraits/#{@interviews[0].slug}.jpg", :width => 500, :height => 335, :alt => @interviews[0].person, :class => 'portrait'}
-			%h2.person= @interviews[0].person
-		%p.summary= @interviews[0].summary	
-	- @interviews.to_a[1..-1].each do |interview|
-		%article.interview.recent
-			%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
-				%img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
-				%h2.person= interview.person				
-			%p.summary= interview.summary
+  %article.interview.latest
+    %a{:href => interview_url(@interviews[0]), :title => "View an interview with #{@interviews[0].person}."}
+      %img{:src => "/images/portraits/#{@interviews[0].slug}.jpg", :width => 500, :height => 335, :alt => @interviews[0].person, :class => 'portrait'}
+      - if @interviews[0].published_at
+        %time{:datetime => @interviews[0].published_at.strftime("%Y-%m-%d")}= @interviews[0].published_at.strftime("%b %d, %Y")
+      %h2.person= @interviews[0].person
+    %p.summary= @interviews[0].summary  
+  - @interviews[1..4].each do |interview|
+    %article.interview.recent
+      %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+        %img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
+        - if interview.published_at
+          %time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
+        %h2.person= interview.person        
+      %p.summary= interview.summary
+  - @interviews.to_a[5..-1].each do |interview|
+    %article.interview.older
+      %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+        %img{:src => "/images/icons/#{interview.slug}.jpg", :width => 50, :height => 50, :alt => interview.person, :class => 'icon'}
+        - if interview.published_at
+          %time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
+        %h2.person= interview.person
+      %p.summary= interview.summary
