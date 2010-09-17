@@ -3,105 +3,104 @@ font-family: "droid sans";
 src: url("/fonts/droid_sans.ttf");
 }
 
-.fusionentire {
-display: block;
-}
-
-a {
-background-color: #ececec;
-color: #666;
-text-decoration: underline;
+a:link, a:visited {
+color: #fe2e9a;
+text-decoration: none;
 }
 
 a:hover {
 color: #fe2e9a !important;
+text-decoration: underline;
+}
+
+a:hover time {
+color: #fe2e9a;
 }
 
 a:hover img {
-opacity: 0.8;
+opacity: 0.9;
 }
 
-article.interview {
-margin-bottom: 20px;
+article.interview, article.overview {
+margin-bottom: 10px;
 }
 
-article.interview a {
-background-color: transparent;
+article.interview a:link, article.interview a:visited {
 color: #000;
+}
+
+article.interview.older {
+font-size: 75%;
+}
+
+article.interview.latest {
+font-size: 110%;
+}
+
+article.interview.older a {
+display: block;
+}
+
+article.interview.recent {
+font-size: 85%;
+}
+
+article.interview.recent + article.interview.older {
+padding-top: 20px;
 }
 
 aside#sidebar {
 float: right;
 width: 130px;
-padding: 0 10px;
-font-size: 60%;
-line-height: 15px;
-}
-
-aside#sidebar a {
-padding: 0;
-background-color: transparent;
-}
-
-body {
-width: 680px;
-padding: 50px 0;
-background-color: #fff;
-color: #000;
-margin: auto;
-text-align: left;
-line-height: 25px;
-font-family: "droid sans", helvetica, serif;
-}
-
-footer {
-color: #999;
+padding-left: 10px;
 font-size: 80%;
 }
 
-footer p {
-clear: left;
+aside#sidebar a {
+color: #000;
 }
 
-footer p:first-child {
-padding-top: 30px;
+body {
+width: 672px;
+margin: 20px auto;
+background-color: #fff;
+color: #000;
+text-align: left;
+font-family: "droid sans", helvetica, serif;
+font-size: 13px;
+line-height: 20px;
+}
+
+footer {
+clear: left;
+font-size: 90%;
+color: #aaa;
+border-top: dotted 1px #999;
 }
 
 h1 {
-padding: 0;
-margin: 0;
-color: #000;
-font-size: 200%;
-font-weight: normal;
-}
-
-h1 a, nav a {
-background-color: transparent;
-color: #fe2e9a;
-}
-
-h1 a:hover, nav a:hover {
-color: #000 !important;
+float: left;
+padding: 10px;
+margin: 0 10px 0 0;
+background-color: #000;
+color: #fff;
+font-size: 100%;
+text-transform: uppercase;
+border-left: solid 5px #fe2e9a;
 }
 
 h2 {
-padding: 0;
-margin: 0;
 font-size: 150%;
-font-weight: normal;
-}
-
-h2.person + p.summary {
+padding: 10px 0 0 0;
 margin: 0;
 }
 
 h3 {
-padding: 0 0 5px 0;
-margin: 20px 0 5px 0;
-color: #555;
-font-size: 140%;
-font-weight: normal;
-border-bottom: solid 1px #ccc;
+color: #777;
+padding: 5px 0;
+margin: 0;
+font-size: 120%;
+border-bottom: dotted 1px #ddd;
 }
 
 img {
@@ -113,87 +112,56 @@ margin-bottom: 10px;
 border: 0;
 }
 
-img.portrait, img.thumbnail {
-margin-bottom: 5px;
-}
-
-img.portrait + p {
-padding: 0 0 15px 0;
-margin: 0;
-font-size: 70%;
-color: #888;
-}
-
-li {
-padding: 3px 0;
+img.icon {
+float: left;
+margin: 0 10px 0 0;
 }
 
 nav ul {
-padding: 5px 0;
-margin: 0 0 15px 0;
-font-size: 75%;
-border-top: dotted 1px #ccc;
-border-bottom: dotted 1px #ccc;
+list-style: none outside;
+padding: 10px 0;
+margin: 10px 0;
+border-top: dotted 1px #999;
+border-bottom: dotted 1px #999;
 }
 
 nav ul li {
 display: inline;
-}
-
-nav ul li:before {
-content: "/";
-}
-
-nav ul li:first-child:before {
-content: "";
-margin-left: -4px;
-}
-
-ol, ul {
-padding: 0 30px;
 font-size: 90%;
 }
 
-p#admin {
-font-size: 70%;
-padding: 0 0 10px 0;
+nav ul li:after {
+content: " / ";
+}
+
+nav ul li a {
+background-color: transparent !important;
 }
 
 p#tagline {
-padding: 10px 0 5px 0;
+background-color: #eee;
+padding: 10px;
 margin: 0;
-color: #888;
-font-size: 90%;
-}
-
-p.license {
-font-size: 90%;
-color: #444;
-}
-
-p.pagination {
-text-align: center;
+font-size: 85%;
 }
 
 p.summary {
-padding: 0;
+padding: 0 0 10px 0;
 margin: 0;
-color: #555;
-font-size: 95%;
+color: #777;
 }
 
-section#contents {
-width: 500px;
-padding: 0 20px 0 0;
-float: left;
-border-right: dotted 1px #ccc;
+section {
+width: 502px;
+padding-right: 20px;
+border-right: dotted 1px #999;
 }
 
 time {
-font-size: 80%;
-color: #aaa;
-}
-
-time:before {
-content: "Published ";
+float: right;
+padding: 8px;
+margin: 10px 0;
+background-color: #eee;
+color: #888;
+text-transform: uppercase;
 }
