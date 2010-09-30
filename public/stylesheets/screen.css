@@ -30,7 +30,7 @@ color: #000;
 }
 
 article.interview.older {
-font-size: 75%;
+font-size: 85%;
 }
 
 article.interview.older a {
@@ -38,7 +38,7 @@ display: block;
 }
 
 article.interview.recent {
-font-size: 85%;
+font-size: 90%;
 }
 
 article.interview.recent + article.interview.older {
@@ -63,24 +63,24 @@ background-color: #fff;
 color: #000;
 text-align: left;
 font-family: "droid sans", helvetica, serif;
-font-size: 13px;
-line-height: 20px;
+font-size: 14px;
+line-height: 23px;
 }
 
 footer {
 clear: left;
-font-size: 85%;
+font-size: 95%;
 color: #888;
 border-top: dotted 1px #999;
 }
 
 h1 {
 float: left;
-padding: 10px;
+padding: 20px;
 margin: 0 10px 0 0;
 background-color: #000;
 color: #fff;
-font-size: 90%;
+font-size: 120%;
 text-transform: uppercase;
 }
 
@@ -122,11 +122,16 @@ border-bottom: dotted 1px #999;
 
 nav ul li {
 display: inline;
-font-size: 90%;
+font-size: 110%;
 }
 
-nav ul li:after {
+nav ul li:first-child:before {
+content: "";
+}
+
+nav ul li:before {
 content: " / ";
+color: #aaa;
 }
 
 nav ul li a {
@@ -134,10 +139,11 @@ background-color: transparent !important;
 }
 
 p#tagline {
+text-align: center;
 background-color: #eee;
-padding: 10px;
+padding: 20px;
 margin: 0;
-font-size: 85%;
+font-size: 110%;
 }
 
 p.summary {
