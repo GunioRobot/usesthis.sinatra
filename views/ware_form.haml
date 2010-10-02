@@ -18,6 +18,12 @@
     %label{:for => 'url'} URL:
     %input{:type => 'text', :name => 'url', :value => @ware.url}
   %p
+    %label{:for => 'type'}Type:
+    %br
+    %select{:name => 'type'}
+      %option{:value => 'Hardware', :selected => @ware.type.to_s == 'Hardware'} Hardware
+      %option{:value => 'Software', :selected => @ware.type.to_s == 'Software'} Software
+  %p
     %label{:for => 'brand'}Brand:
     %br
     %select{:name => 'brand'}
