@@ -1,0 +1,15 @@
+%h2 Brands
+%p All the makers of hardware and software cited on The Setup.
+- unless @brands.empty?
+  %table
+    %tr
+      %th Name
+      %th URL
+      %th Items
+    - @brands.each do |brand|
+      %tr
+        %td
+          %a{:href => "/brands/#{brand.slug}/"}= brand.title
+        %td
+          %a{:href => brand.url}= brand.url
+        %td= brand.wares.count
