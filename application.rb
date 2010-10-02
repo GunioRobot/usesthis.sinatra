@@ -113,6 +113,11 @@ end
 
 # Brands
 
+get '/brands/?' do
+    @brands = Brand.all
+    haml :brands
+end
+
 get '/brands/new/?' do
     needs_auth
     
@@ -311,11 +316,4 @@ post '/wares/:slug/edit/?' do |slug|
         @brands = Brand.all
         haml :ware_form, :cache => false
     end
-end
-
-get %r{^/(hardware|software)/?$} do |type|
-    
-    @wares = eval(type.capitalize).all(:order => :title)
-
-    haml :wares
 end
