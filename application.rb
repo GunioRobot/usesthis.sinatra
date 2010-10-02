@@ -259,7 +259,14 @@ end
 post '/wares/new/?' do
     needs_auth
 
-    @ware = Ware.new(params)
+    @ware = Ware.new(
+        :slug           => params["slug"],
+        :title          => params["title"],
+        :type           => params["type"],
+        :url            => params["url"],
+        :description    => params["description"]
+    )
+    
     @ware.brand = Brand.first(:slug => params["brand"])
     
     if @ware.save
@@ -291,6 +298,7 @@ post '/wares/:slug/edit/?' do |slug|
     @ware.attributes = {
         :slug           => params["slug"],
         :title          => params["title"],
+        :type           => params["type"],
         :url            => params["url"],
         :description    => params["description"],
     }
