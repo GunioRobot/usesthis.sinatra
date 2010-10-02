@@ -1,0 +1,21 @@
+- if @brand.errors.length > 0
+  %ul{:class => 'errors'}
+  - @brand.errors.each do |error|
+    %li= error
+
+%form{:method => 'post', :action => "/brands/#{@brand.new? ? 'new' : @brand.slug + '/edit'}"}
+  - if @brand.new?
+    %p
+      %label{:for => 'slug'} Slug:
+      %input{:type => 'text', :name => 'slug', :value => @brand.slug}
+  %p
+    %label{:for => 'title'} Title:
+    %input{:type => 'text', :name => 'title', :value => @brand.title}
+  %p
+    %label{:for => 'description'} Description:
+    %input{:type => 'text', :name => 'description', :value => @brand.description}
+  %p
+    %label{:for => 'url'} URL:
+    %input{:type => 'text', :name => 'url', :value => @brand.url}
+  %p
+    %input{:type => 'submit', :value => 'Go'}
