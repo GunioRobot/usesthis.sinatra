@@ -1,4 +1,4 @@
-- if @interviews && @interviews.length > 0
+- unless @interviews.empty?
   - @interviews[0..4].each do |interview|
     %article.interview.recent
       %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
