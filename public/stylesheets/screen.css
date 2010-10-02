@@ -158,6 +158,16 @@ padding-right: 20px;
 border-right: dotted 1px #999;
 }
 
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 90%;
+}
+
+td {
+border-top: solid 1px #eee;
+}
+
 time {
 float: right;
 padding: 8px;
@@ -165,4 +175,10 @@ margin: 10px 0;
 background-color: #eee;
 color: #888;
 text-transform: uppercase;
+}
+
+th {
+border-bottom: solid 1px #ccc;
+font-size: 90%;
+color: #555;
 }
