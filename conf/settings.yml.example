@@ -1,0 +1,9 @@
+:admin:
+    :name: "your name"
+    :password: "your password"
+:database:
+    :adapter: "mysql (or similar)"
+    :database: "your db name"
+    :username: "your username"
+    :password: "your password"
+    :host: "localhost (probably)"
