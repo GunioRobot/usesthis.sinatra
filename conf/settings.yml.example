@@ -1,6 +1,6 @@
 :admin:
     :name: "your name"
-    :password: "your password"
+    :password: "your password (SHA1 hex digest)"
 :database:
     :adapter: "mysql (or similar)"
     :database: "your db name"
