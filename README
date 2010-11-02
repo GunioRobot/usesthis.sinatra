@@ -1,11 +1,6 @@
-The Setup is a Sinatra-based nerdy interviews web application, and lives
-at http://usesthis.com/. This is the source code, for better or worse.
+The Setup is a Sinatra-based nerdy interviews web application, and lives at http://usesthis.com/. This is the source code, for better or worse. It requires some Ruby gems:
 
-It uses some Ruby gems:
-
-	* Sinatra (duh)         http://www.sinatrarb.com/
-	* HAML                  http://haml-lang.com/
-	* DataMapper            http://datamapper.org/
-
-Love,
-d (at waferbaby dot com).
+	* Sinatra           http://www.sinatrarb.com/
+	* Sinatra Cache     http://github.com/kematzy/sinatra-cache
+	* HAML              http://haml-lang.com/
+	* DataMapper        http://datamapper.org/
