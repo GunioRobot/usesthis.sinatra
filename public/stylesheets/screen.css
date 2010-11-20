@@ -76,11 +76,17 @@ border-top: dotted 1px #999;
 
 h1 {
 float: left;
+padding: 0;
+margin: 0;
+font-size: 120%;
+}
+
+h1 a {
+display: block;
 padding: 20px;
 margin: 0 10px 0 0;
 background-color: #000;
-color: #fff;
-font-size: 120%;
+color: #fff !important;
 text-transform: uppercase;
 }
 
