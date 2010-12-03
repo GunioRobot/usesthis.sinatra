@@ -111,6 +111,10 @@ get '/logout/?' do
     redirect '/'
 end
 
+get '/popular/?' do
+    Hardware.interviews.inspect
+end
+
 # Brands
 
 get '/brands/?' do
@@ -247,7 +251,7 @@ get '/interviews/:slug/?' do |slug|
 
     @title = "An interview with #{@interview.person}"
 
-    haml :interview
+    haml :interview, :cache => interview.published_at
 end
 
 # Wares
