@@ -251,7 +251,7 @@ get '/interviews/:slug/?' do |slug|
 
     @title = "An interview with #{@interview.person}"
 
-    haml :interview, :cache => interview.published_at
+    haml :interview
 end
 
 # Wares
