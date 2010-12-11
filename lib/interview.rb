@@ -41,22 +41,22 @@ class Interview
     end
     
     def link_wares
+        self.wares = []
+        
         contents.scan(/\[([^\[\(\)]+)\]\[([a-z0-9\.\-]+)?\]/).each do |link|
             ware_slug = link[1] ? link[1] : link[0].downcase
-
-            unless self.wares.first(:slug => ware_slug)
-                ware = Ware.first(:slug => ware_slug)
-                if ware.nil?
-                    ware = Ware.new(
-                        :slug           => ware_slug,
-                        :title          => ware_slug,
-                        :description    => '?',
-                        :url            => "/wares/#{ware_slug}/edit"
-                    )
-                end
-                
-                self.wares << ware
+            
+            ware = Ware.first(:slug => ware_slug)
+            if ware.nil?
+                ware = Ware.new(
+                    :slug           => ware_slug,
+                    :title          => ware_slug,
+                    :description    => '?',
+                    :url            => "/wares/#{ware_slug}/edit"
+                )
             end
+                
+            self.wares << ware
         end
     end
 end
