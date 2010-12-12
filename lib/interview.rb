@@ -24,7 +24,7 @@ class Interview
     has n, :wares, :through => Resource
     has 1, :license, :through => Resource
     
-    before :create, :link_wares
+    before :save, :link_wares
     before :update, :link_wares
     
     def contents_with_links
