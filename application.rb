@@ -213,25 +213,24 @@ post '/interviews/:slug/edit/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
     
-    @interview.attributes = {
-        :slug       => params["slug"],
+    attributes = {
         :person     => params["person"],
         :summary    => params["summary"],
         :credits    => params["credits"],
         :contents   => params["contents"]
     }
     
-    @interview.license = License.first(:slug => params["license"])
+    attributes[:license] = License.first(:slug => params["license"]) if params["license"]
     
     case params["status"]
         when 'draft':
-            @interview.published_at = nil unless @interview.published_at.nil?
+            attributes[:published_at] = nil unless @interview.published_at.nil?
         when 'published':
-            @interview.published_at = Time.now if @interview.published_at.nil?
+            attributes[:published_at] = Time.now if @interview.published_at.nil?
             cache_expire("/")
     end
     
-    if @interview.save
+    if @interview.update(attributes)
         cache_expire("/interviews/#{@interview.slug}/")
         redirect "/interviews/#{@interview.slug}/"
     else
