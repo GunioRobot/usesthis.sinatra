@@ -163,7 +163,7 @@ color: #888;
 }
 
 time:before {
-content: "Published @ ";
+content: "Published on ";
 }
 
 ul, ol {
