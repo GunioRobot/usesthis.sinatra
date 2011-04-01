@@ -1,17 +1,18 @@
 - unless @interviews.empty?
-  - @interviews[0..4].each do |interview|
-    %article.interview.recent
-      %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
-        %img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'thumbnail'}
-        - if interview.published_at
-          %time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
-        %h2.person= interview.person        
-      %p.summary= interview.summary
-  - @interviews.to_a[5..-1].each do |interview|
-    %article.interview.older
-      %a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
-        %img{:src => "/images/icons/#{interview.slug}.jpg", :width => 50, :height => 50, :alt => interview.person, :class => 'icon'}
-        - if interview.published_at
-          %time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
-        %h2.person= interview.person
-      %p.summary= interview.summary
+	%ul#interviews
+		%li
+			%a{:href => interview_url(@interviews[0]), :title => "View an interview with #{@interviews[0].person}."}
+				%img{:src => "/images/portraits/#{@interviews[0].slug}.jpg", :width => 500, :height => 335, :alt => @interviews[0].person, :class => 'portrait'}
+				%h2.person= @interviews[0].person
+			%p.summary= @interviews[0].summary
+			- if @interviews[0].published_at
+				%time{:datetime => @interviews[0].published_at.strftime("%Y-%m-%d")}= @interviews[0].published_at.strftime("%b %d, %Y")
+			
+		- @interviews.to_a[1..-1].each do |interview|
+			%li
+				%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+					%img{:src => "/images/thumbnails/#{interview.slug}.jpg", :width => 500, :height => 100, :alt => interview.person, :class => 'portrait'}
+					%h2.person= interview.person
+				%p.summary= interview.summary
+				- if interview.published_at
+					%time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
