@@ -1,0 +1,10 @@
+- unless @interviews.empty?
+	%ul#interviews
+		- @interviews.each do |interview|
+			%li
+				%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}
+					%img{:src => "/images/icons/#{interview.slug}.jpg", :width => 66, :height => 66, :alt => interview.person, :class => 'icon'}
+					%h2.person= interview.person
+				%p.summary= interview.summary
+				- if interview.published_at
+					%time{:datetime => interview.published_at.strftime("%Y-%m-%d")}= interview.published_at.strftime("%b %d, %Y")
