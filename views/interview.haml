@@ -1,17 +1,17 @@
 %article.overview
-  %img{:src => "/images/portraits/#{@interview.slug}.jpg", :width => 500, :height => 335, :alt => @interview.person, :class => 'portrait'}
-  - if @interview.credits
-    :markdown
-      #{@interview.credits}
-  - if @interview.published_at
-    %time{:datetime => @interview.published_at.strftime("%Y-%m-%d")}= @interview.published_at.strftime("%b %d, %Y")
-  %h2.person= @interview.person
-  %p.summary= @interview.summary
+	%img{:src => "/images/portraits/#{@interview.slug}.jpg", :width => 500, :height => 335, :alt => @interview.person, :class => 'portrait'}
+	- if @interview.credits
+		:markdown
+			#{@interview.credits}
+	%h2.person= @interview.person
+	%p.summary= @interview.summary
+	- if @interview.published_at
+		%time{:datetime => @interview.published_at.strftime("%Y-%m-%d")}= @interview.published_at.strftime("%b %d, %Y")
 %article.contents
-  :markdown
-    #{@interview.contents_with_links}
-  - if @interview.license
-    %p.license
-      This interview is available under the
-      %a{:href => @interview.license.url}= @interview.license.title
-      license.
+	:markdown
+		#{@interview.contents_with_links}
+	- if @interview.license
+		%p.license
+			This interview is available under the
+			%a{:href => @interview.license.url}= @interview.license.title
+			license.
