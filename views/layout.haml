@@ -1,49 +1,51 @@
 !!! Strict
 %html{html_attrs}
-  %head
-    %title #{"#{@title} : " if @title}The Setup
-    %link{:href => "#{domain_prefix}/stylesheets/screen.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    %link{:href => "#{domain_prefix}/stylesheets/mobile.css", :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
-    - if has_auth?
-      %link{:href => "#{domain_prefix}/stylesheets/admin.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
-    %link{:href => "#{domain_prefix}/feed/", :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
-    %meta{:charset => 'utf-8'}
-    %meta{:name => 'viewport', :content => 'width=device-width'}
-  %body
-    %header
-      %h1
-        %a{:href => "#{domain_prefix}/", :title => 'All the interviews.'}The Setup
-      %p#tagline A bunch of nerdy interviews. What do people use to get the job done?
-    %nav
-      %ul
-        %li
-          %a{:href => "#{domain_prefix}/about/", :title => 'A little more info about the site.'}About
-        %li
-          %a{:href => "#{domain_prefix}/community/", :title => 'Other interviews by people like you.'}Community					
-    %aside{:id => 'sidebar'}
-      <!--[if IE]>
-      <script type="text/javascript">
-      document.write(unescape('%3Cscr' + 'ipt src="http://adn.fusionads.net/www/pull/get.php?zoneid=100&charset=UTF-8&withtext=1&cb=' + Math.floor(Math.random() * 99999999999) + '"%3E%3C/script%3E'));
-      </script>
-      <![endif]--> 
-      <!--[if !IE]><!--> 
-      <script defer="defer" type="text/javascript"> 
-      document.write(unescape('%3Cscr' + 'ipt src="http://adn.fusionads.net/www/pull/get.php?zoneid=100&charset=UTF-8&withtext=1&cb=' + Math.floor(Math.random() * 99999999999) + '"%3E%3C/script%3E'));
-      </script> 
-      <!--<![endif]-->
-      %br
-      %a{:href => "http://fusionads.net", :title => "Powered by Fusion Ads"}POWERED by FUSION
-    %section{:id => 'contents'}
-      = yield
-    %footer
-      :markdown
-        This is a [waferbaby](http://waferbaby.com/ "Some website.") snafu. Follow us [on Twitter](http://twitter.com/usesthis/ "Our Twitter account."), subscribe to [the feed](#{domain_prefix}/feed/ "The Atom feed for the site."), or grab [the Ruby source code](http://github.com/waferbaby/usesthis/ "The source code for this site.") (if you're into that sort of thing). Unless otherwise noted, everything is available via the [Attribution-Share Alike](http://creativecommons.org/licenses/by-sa/2.5/au/ "A Creative Commons license.") license.
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-    var pageTracker = _gat._getTracker("UA-18499179-1");
-    pageTracker._trackPageview();
-    } catch(err) {}</script>
+%head
+	%title #{"#{@title} : " if @title}The Setup
+	%link{:href => "#{domain_prefix}/stylesheets/screen.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+	%link{:href => "#{domain_prefix}/stylesheets/mobile.css", :media => 'only screen and (max-device-width: 480px)', :rel => 'stylesheet', :type => 'text/css'}
+	- if has_auth?
+		%link{:href => "#{domain_prefix}/stylesheets/admin.css", :media => 'screen', :rel => 'stylesheet', :type => 'text/css'}
+	%link{:href => "#{domain_prefix}/feed/", :type => 'application/atom+xml', :rel => 'alternate', :title => 'Atom feed'}
+	%meta{:charset => 'utf-8'}
+	%meta{:name => 'viewport', :content => 'initial-scale = 0.45'}
+%body
+	%header
+		%h1
+			%a{:href => "#{domain_prefix}/", :title => 'The most recent interviews.'}The Setup
+		%p#tagline A bunch of nerdy interviews. What do people use to get stuff done?
+	%nav
+		%ul
+			%li
+				%a{:href => "#{domain_prefix}/archives/", :title => 'All the other interviews.'}Archives
+			%li
+				%a{:href => "#{domain_prefix}/about/", :title => 'A little more info about the site.'}About
+			%li
+				%a{:href => "#{domain_prefix}/community/", :title => 'Other interviews by people like you.'}Community
+	%aside{:id => 'sidebar'}
+		%p
+			<!--[if IE]>
+			<script type="text/javascript">
+			document.write(unescape('%3Cscr' + 'ipt src="http://adn.fusionads.net/www/pull/get.php?zoneid=100&charset=UTF-8&withtext=1&cb=' + Math.floor(Math.random() * 99999999999) + '"%3E%3C/script%3E'));
+			</script>
+			<![endif]--> 
+			<!--[if !IE]><!--> 
+			<script defer="defer" type="text/javascript"> 
+			document.write(unescape('%3Cscr' + 'ipt src="http://adn.fusionads.net/www/pull/get.php?zoneid=100&charset=UTF-8&withtext=1&cb=' + Math.floor(Math.random() * 99999999999) + '"%3E%3C/script%3E'));
+			</script> 
+			<!--<![endif]-->
+			%a{:href => "http://fusionads.net", :title => "Powered by Fusion Ads"}POWERED by FUSION
+	%section{:id => 'contents'}
+		= yield
+	%footer
+		:markdown
+			This is a [waferbaby](http://waferbaby.com/ "Some website.") snafu. Follow us [on Twitter](http://twitter.com/usesthis/ "Our Twitter account."), subscribe to [the feed](#{domain_prefix}/feed/ "The Atom feed for the site."), or grab [the Ruby source code](http://github.com/waferbaby/usesthis/ "The source code for this site.") (if you're into that sort of thing). Unless otherwise noted, everything is available via the [Attribution-Share Alike](http://creativecommons.org/licenses/by-sa/2.5/au/ "A Creative Commons license.") license.
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-18499179-1");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
