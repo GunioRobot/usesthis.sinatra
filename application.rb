@@ -63,7 +63,7 @@ error do
 end
 
 get %r{^/(interviews/?)?$} do
-    @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
+    @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc], :limit => 10)
     
     unless @interviews.empty? || development? || has_auth?
         etag(Digest::MD5.hexdigest("index:" + @interviews[0].updated_at.to_s))
@@ -75,6 +75,17 @@ end
 
 get '/about/?' do
     haml :about
+end
+
+get '/archives/?' do
+    @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
+
+    unless @interviews.empty? || development? || has_auth?
+        etag(Digest::MD5.hexdigest("archives:" + @interviews[0].updated_at.to_s))
+        last_modified(@interviews[0].updated_at)
+    end
+    
+    haml :archives
 end
 
 get '/community/?' do
@@ -232,6 +243,7 @@ post '/interviews/:slug/edit/?' do |slug|
     
     if @interview.update(attributes)
         cache_expire("/interviews/#{@interview.slug}/")
+        cache_expire("/archives/")
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
