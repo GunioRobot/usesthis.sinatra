@@ -60,23 +60,13 @@ font-size: 80%;
 
 h1 {
 float: left;
-padding: 0;
-margin: 0 20px 0 0;
-background-color: #000;
-color: #fff;
-font-size: 120%;
-text-transform: uppercase;
+padding: 10px 0;
+margin: 0 30px 0 0;
+font-size: 250%;
 }
 
-h1 a {
-display: block;
-padding: 18px;
-margin: 0;
-color: #fff !important;
-}
-
-h1 a:hover, h2 a:hover {
-color: #fe2e9a !important;
+h1 a:link, h1 a:visited {
+color: #000 !important;
 }
 
 h2 {
@@ -86,7 +76,7 @@ font-size: 150%;
 font-weight: normal;
 }
 
-h2 a {
+h2 a:link, h2 a:visited {
 color: #000 !important;
 }
 
@@ -125,13 +115,16 @@ color: #666;
 nav ul {
 padding: 10px 0 20px 0;
 margin: 0;
-font-size: 90%;
-text-transform: uppercase;
+font-size: 120%;
 border-bottom: dotted 1px #aaa;
 }
 
 nav ul li {
 display: inline;
+}
+
+nav ul li.selected {
+font-weight: bold;
 }
 
 nav ul li:after {
@@ -167,14 +160,23 @@ content: "Published on ";
 }
 
 ul, ol {
+padding: 10px;
+margin: 10px 20px;
+font-size: 85%;
+}
+
+ul#interviews {
 list-style: none inside;
 padding: 0;
 margin: 0;
+font-size: 100%;
 }
 
 ul#interviews li {
 clear: left;
-padding-bottom: 15px;
+padding-bottom: 5px;
+margin-bottom: 15px;
+border-bottom: dotted 1px #ddd;
 }
 
 ul#interviews a h2 {
