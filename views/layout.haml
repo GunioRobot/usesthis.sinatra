@@ -16,11 +16,11 @@
 		%p#tagline A bunch of nerdy interviews. What do people use to get stuff done?
 	%nav
 		%ul
-			%li
+			%li{:class => @env['REQUEST_PATH'].match(/\/archives/) ? 'selected' : false}
 				%a{:href => "#{domain_prefix}/archives/", :title => 'All the other interviews.'}Archives
-			%li
+			%li{:class => @env['REQUEST_PATH'].match(/\/about/) ? 'selected' : false}
 				%a{:href => "#{domain_prefix}/about/", :title => 'A little more info about the site.'}About
-			%li
+			%li{:class => @env['REQUEST_PATH'].match(/\/community/) ? 'selected' : false}
 				%a{:href => "#{domain_prefix}/community/", :title => 'Other interviews by people like you.'}Community
 	%aside{:id => 'sidebar'}
 		%p
