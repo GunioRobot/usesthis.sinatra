@@ -102,7 +102,7 @@ get '/feed/?' do
         last_modified(@interviews[0].updated_at)
     end
     
-    haml :feed, {:format => :xhtml, :layout => false, :cache => false}
+    haml :feed, {:format => :xhtml, :layout => false}
 end
 
 get '/login/?' do
@@ -243,7 +243,9 @@ post '/interviews/:slug/edit/?' do |slug|
     
     if @interview.update(attributes)
         cache_expire("/interviews/#{@interview.slug}/")
+        cache_expire("/feed/")
         cache_expire("/archives/")
+        
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
