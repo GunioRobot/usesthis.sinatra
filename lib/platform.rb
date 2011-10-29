@@ -7,7 +7,7 @@ require 'datamapper'
 
 class Platform
     include DataMapper::Resource
-    
+
     property :slug,         String, :key => true
     property :title,        String
 end

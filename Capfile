@@ -19,12 +19,12 @@ namespace :deploy do
             find_and_execute_task("thin:#{action}")
         end
     end
-    
+
     task :restart, :roles => :app do
         deploy.stop
         deploy.start
     end
-    
+
     task :symlink_shared do
         run "ln -nfs #{shared_path}/conf/settings.yml #{deploy_to}/current/conf/settings.yml"
         run "ln -nfs /usr/local/www/shared/fonts/ #{deploy_to}/current/public/fonts"

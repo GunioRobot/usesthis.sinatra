@@ -16,12 +16,12 @@ end
 configure do
     @config = YAML.load_file(File.join('conf', 'settings.yml'))
     DataMapper.setup(:default, @config[:database])
-    
+
     set :admin_username, @config[:admin][:name]
     set :admin_password, @config[:admin][:password]
-    
+
     set :haml, {:format => :html5}
-    
+
     set :cache_enabled, !development?
     set :cache_output_dir, File.dirname(__FILE__) + '/public/system/cache'
 
@@ -32,22 +32,22 @@ helpers do
     def current_page
         @page = params[:page] && params[:page].match(/\d+/) ? params[:page].to_i : 1
     end
-    
+
     def interview_url(interview)
         development? ? "/interviews/#{interview.slug}/" : "http://#{interview.slug}.usesthis.com/"
     end
-    
+
     def domain_prefix
         development? ? '' : 'http://usesthis.com'
     end
-    
+
     def needs_auth
         raise not_found unless has_auth?
     end
-    
+
     def has_auth?
         session[:authorised] == true
-    end    
+    end
 end
 
 before do
@@ -64,12 +64,12 @@ end
 
 get %r{^/(interviews/?)?$} do
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc], :limit => 10)
-    
+
     unless @interviews.empty? || development? || has_auth?
         etag(Digest::MD5.hexdigest("index:" + @interviews[0].updated_at.to_s))
         last_modified(@interviews[0].updated_at)
     end
-    
+
     haml :index
 end
 
@@ -84,7 +84,7 @@ get '/archives/?' do
         etag(Digest::MD5.hexdigest("archives:" + @interviews[0].updated_at.to_s))
         last_modified(@interviews[0].updated_at)
     end
-    
+
     haml :archives
 end
 
@@ -96,12 +96,12 @@ get '/feed/?' do
     content_type 'application/atom+xml', :charset => 'utf-8'
 
     @interviews = Interview.all(:published_at.not => nil, :order => [:published_at.desc])
-    
+
     unless @interviews.empty? || development? || has_auth?
         etag(Digest::MD5.hexdigest("feed:" + @interviews[0].updated_at.to_s))
         last_modified(@interviews[0].updated_at)
     end
-    
+
     haml :feed, {:format => :xhtml, :layout => false}
 end
 
@@ -112,7 +112,7 @@ get '/login/?' do
         throw :halt, [401, "Don't think I don't love you."]
         return
     end
-    
+
     session[:authorised] = true
     redirect '/'
 end
@@ -135,7 +135,7 @@ end
 
 get '/brands/new/?' do
     needs_auth
-    
+
     @brand = Brand.new(params)
     haml :brand_form, :cache => false
 end
@@ -153,7 +153,7 @@ end
 
 get '/brands/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @brand = Brand.first(:slug => slug)
     raise not_found unless @brand
 
@@ -164,10 +164,10 @@ end
 
 post '/brands/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @brand = Brand.first(:slug => slug)
     raise not_found unless @brand
-    
+
     if @brand.update(params)
         redirect "/"
     else
@@ -179,16 +179,16 @@ end
 
 get '/interviews/new/?' do
     needs_auth
-    
+
     @interview = Interview.new(params)
     @licenses = License.all
-    
+
     haml :interview_form, :cache => false
 end
 
 post '/interviews/new/?' do
     needs_auth
-    
+
     @interview = Interview.new(
         :slug       => params["slug"],
         :person     => params["person"],
@@ -196,9 +196,9 @@ post '/interviews/new/?' do
         :credits    => params["credits"],
         :contents   => params["contents"]
     )
-    
+
     @interview.license = License.first(:slug => params["license"])
-    
+
     if @interview.save
         redirect "/interviews/#{@interview.slug}/"
     else
@@ -209,10 +209,10 @@ end
 
 get '/interviews/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
-    
+
     @licenses = License.all
 
     haml :interview_form, :cache => false
@@ -220,19 +220,19 @@ end
 
 post '/interviews/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
-    
+
     attributes = {
         :person     => params["person"],
         :summary    => params["summary"],
         :credits    => params["credits"],
         :contents   => params["contents"]
     }
-    
+
     attributes[:license] = License.first(:slug => params["license"]) if params["license"]
-    
+
     case params["status"]
         when 'draft':
             attributes[:published_at] = nil unless @interview.published_at.nil?
@@ -240,12 +240,12 @@ post '/interviews/:slug/edit/?' do |slug|
             attributes[:published_at] = Time.now if @interview.published_at.nil?
             cache_expire("/")
     end
-    
+
     if @interview.update(attributes)
         cache_expire("/interviews/#{@interview.slug}/")
         cache_expire("/feed/")
         cache_expire("/archives/")
-        
+
         redirect "/interviews/#{@interview.slug}/"
     else
         @licenses = License.all
@@ -256,7 +256,7 @@ end
 get '/interviews/:slug/?' do |slug|
     @interview = Interview.first(:slug => slug)
     raise not_found unless @interview
-    
+
     unless development? || has_auth?
         etag(Digest::MD5.hexdigest(@interview.slug + ':' + @interview.updated_at.to_s))
         last_modified(@interview.updated_at)
@@ -271,10 +271,10 @@ end
 
 get '/wares/new/?' do
     needs_auth
-    
+
     @ware = Ware.new(params)
     @brands = Brand.all
-    
+
     haml :ware_form, :cache => false
 end
 
@@ -288,9 +288,9 @@ post '/wares/new/?' do
         :url            => params["url"],
         :description    => params["description"]
     )
-    
+
     @ware.brand = Brand.first(:slug => params["brand"])
-    
+
     if @ware.save
         redirect '/'
     else
@@ -301,7 +301,7 @@ end
 
 get '/wares/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @ware = Ware.first(:slug => slug)
     raise not_found unless @ware
 
@@ -313,10 +313,10 @@ end
 
 post '/wares/:slug/edit/?' do |slug|
     needs_auth
-    
+
     @ware = Ware.first(:slug => slug)
     raise not_found unless @ware
-    
+
     @ware.attributes = {
         :slug           => params["slug"],
         :title          => params["title"],
@@ -324,9 +324,9 @@ post '/wares/:slug/edit/?' do |slug|
         :url            => params["url"],
         :description    => params["description"],
     }
-    
+
     @ware.brand = Brand.first(:slug => params["brand"]) unless params["brand"].empty?
-        
+
     if @ware.save
         redirect "/"
     else

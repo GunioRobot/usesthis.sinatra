@@ -7,7 +7,7 @@
 			%p.summary= @interviews[0].summary
 			- if @interviews[0].published_at
 				%time{:datetime => @interviews[0].published_at.strftime("%Y-%m-%d")}= @interviews[0].published_at.strftime("%b %d, %Y")
-			
+
 		- @interviews.to_a[1..-1].each do |interview|
 			%li
 				%a{:href => interview_url(interview), :title => "View an interview with #{interview.person}."}

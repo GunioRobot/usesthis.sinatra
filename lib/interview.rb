@@ -7,7 +7,7 @@ require 'datamapper'
 
 class Interview
     include DataMapper::Resource
-    
+
     property :slug,         String, :key => true
     property :person,       String
     property :summary,      String, :length => 100
@@ -15,18 +15,18 @@ class Interview
     property :url,          String, :length => 150
     property :contents,     Text
     property :published_at, DateTime
-    
+
     timestamps :at
-    
+
     validates_uniqueness_of :slug
     validates_uniqueness_of :person, :summary, :contents
-    
+
     has n, :wares, :through => Resource
     has 1, :license, :through => Resource
-    
+
     before :save, :link_wares
     before :update, :link_wares
-    
+
     def contents_with_links
         result = attribute_get(:contents)
         if self.wares.length > 0
@@ -39,13 +39,13 @@ class Interview
 
         result
     end
-    
+
     def link_wares
         self.wares = []
-        
+
         contents.scan(/\[([^\[\(\)]+)\]\[([a-z0-9\.\-]+)?\]/).each do |link|
             ware_slug = link[1] ? link[1] : link[0].downcase
-            
+
             ware = Ware.first(:slug => ware_slug)
             if ware.nil?
                 ware = Ware.new(
@@ -55,7 +55,7 @@ class Interview
                     :url            => "/wares/#{ware_slug}/edit"
                 )
             end
-                
+
             self.wares << ware
         end
     end

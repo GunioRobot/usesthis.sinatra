@@ -7,12 +7,12 @@ require 'datamapper'
 
 class License
     include DataMapper::Resource
-    
+
     property :slug,         String, :key => true
     property :title,        String
     property :url,          String, :length => 150
-    
+
     timestamps :at
-    
+
     has n, :interviews, :through => Resource
 end
